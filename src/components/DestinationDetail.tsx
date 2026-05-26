@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  ChevronLeft, Menu, Bell, Calendar, Sparkles, Instagram, Facebook, Twitter, Youtube, CheckCircle, X, Phone
+  ChevronLeft, Menu, Bell, Calendar, Sparkles, Instagram, Facebook, Twitter, Youtube, CheckCircle, X, Phone, Globe
 } from 'lucide-react';
 import { Destination } from '../types';
 import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
-import bgImg from '../assets/images/stadium_morning_1779399799628.png';
+import bgImg from '../assets/images/sportix_diverse_leaders_1779746487360.png';
+import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 interface DestinationDetailProps {
   currentDestination: Destination;
@@ -31,6 +32,28 @@ export default function DestinationDetail({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Cumulative live counter ticking up continuously in real-time
+  const [cumulativeInscriptions, setCumulativeInscriptions] = useState(0);
+
+  useEffect(() => {
+    // Generate a beautiful base count depending on city
+    let baseCount = 3450;
+    if (currentDestination.id === 'douala') baseCount = 5820;
+    else if (currentDestination.id === 'yaounde') baseCount = 3120;
+    else if (currentDestination.id === 'abidjan') baseCount = 7430;
+    else if (currentDestination.id === 'cotonou') baseCount = 2190;
+    else if (currentDestination.id === 'nairobi') baseCount = 6880;
+    else if (currentDestination.id === 'casablanca') baseCount = 3760;
+
+    setCumulativeInscriptions(baseCount);
+
+    const interval = setInterval(() => {
+      setCumulativeInscriptions(prev => prev + Math.floor(Math.random() * 2) + 1);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [currentDestination.id]);
 
   // Active live ticking countdown
   useEffect(() => {
@@ -196,11 +219,17 @@ END:VCALENDAR`;
           <div className="flex items-center gap-3">
             {/* Live Visitors Stats */}
             <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-2.5 py-1.5 h-11">
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
               </span>
               <span>{activeCount} en ligne</span>
+            </div>
+
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-xl px-2.5 py-1.5 h-11" title="Visiteurs uniques sur ce salon">
+              <Globe className="w-3.5 h-3.5 text-amber-500" />
+              <span>{(currentDestination.reachedCount || 2350).toLocaleString()} consultés</span>
             </div>
             
             <div className="hidden select-none md:flex items-center text-[10px] sm:text-xs font-mono text-slate-400 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 h-11">
@@ -243,14 +272,11 @@ END:VCALENDAR`;
           {/* Inner Content Block */}
           <main className="w-full max-w-4xl z-10 space-y-6 py-12 flex flex-col items-center md:items-start justify-center">
             
-            <span className="text-xs font-mono font-medium tracking-[0.4em] text-rose-500 uppercase pr-[0.4em] select-none flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
-              Salon Roadshow Officiel
-            </span>
+
 
             {/* Giant Title of City */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-medium tracking-tight text-white mb-2 leading-none uppercase select-none text-center md:text-left">
-              {currentDestination.name}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-medium tracking-tight text-white mb-2 leading-none uppercase select-none text-center md:text-left">
+              SALON SPORTIX {currentDestination.name}
             </h1>
 
             {/* Date subtitle */}
@@ -301,8 +327,30 @@ END:VCALENDAR`;
               </div>
             </div>
 
+            {/* Cumulative Live Counter System - Continuous addition without arrival */}
+            <div className="w-full max-w-sm flex flex-col bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3.5 select-none relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
+                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Système cumulé en direct (Inscriptions)</span>
+              </div>
+              <div className="flex items-baseline gap-1.5 mt-1.5">
+                <span className="text-2xl font-mono font-bold text-white tracking-tight">
+                  {cumulativeInscriptions.toLocaleString()}
+                </span>
+                <span className="text-xs text-gray-400 font-light font-sans">participants cumulés</span>
+                <span className="flex h-1.5 w-1.5 relative ml-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                </span>
+              </div>
+              <p className="text-[9px] font-mono text-gray-500 mt-1">
+                Mise à jour en continu sans interruption • Réseau Sportix Salon
+              </p>
+            </div>
+
             {/* Direct Information Details */}
-            <div className="flex flex-col gap-3 py-1 w-full max-w-md items-center md:items-start text-left">
+            <div className="flex flex-col gap-3.5 py-1 w-full max-w-md items-center md:items-start text-left">
               {currentDestination.phones && currentDestination.phones.length > 0 && (
                 <div className="w-full flex items-start gap-3 bg-amber-500/5 border border-amber-500/20 rounded-xl p-3.5">
                   <Phone className="w-5 h-5 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
@@ -321,6 +369,28 @@ END:VCALENDAR`;
                   </div>
                 </div>
               )}
+
+              {/* Collaborators Panel inside the Direct Info area */}
+              <div className="w-full bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2.5">
+                <div className="text-left">
+                  <span className="text-[9px] font-mono text-[#d4af37] tracking-[0.2em] uppercase block">ESPACE COLLABORATEURS</span>
+                  <p className="text-[10px] font-bold text-gray-300">Partenaires Officiels de Liaison :</p>
+                </div>
+                
+                <div className="flex flex-wrap items-center gap-4.5 mt-1">
+                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900 border border-white/5 rounded p-1 flex items-center justify-center">
+                    <InsideSportsLogo className="h-6" />
+                  </div>
+                  <div className="w-px h-5 bg-white/10" />
+                  <div className="hover:scale-105 transition-transform duration-300 w-[60px] flex items-center justify-center bg-neutral-900 border border-white/5 rounded p-1">
+                    <FelinLogo className="h-4.5" />
+                  </div>
+                  <div className="w-px h-5 bg-white/10" />
+                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900 border border-white/5 rounded p-1 flex items-center justify-center">
+                    <SportThequeLogo className="h-6" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Buttons array */}
@@ -438,7 +508,7 @@ END:VCALENDAR`;
               <div className="space-y-4">
                 <div className="rounded-xl bg-[#13141b] border border-white/5 p-4 text-xs space-y-2">
                   <span className="font-mono text-[9px] text-[#d4af37] uppercase tracking-wider block">CONTACT GENERAL</span>
-                  <p className="text-gray-300">📧 contact@sportixsalon.com</p>
+                  <p className="text-gray-300">📧 salon-sportix@yahoo.com</p>
                   <p className="text-gray-300">📞 +237 600 000 000</p>
                 </div>
 

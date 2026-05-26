@@ -31,19 +31,21 @@ const SYSTEM_INSTRUCTION = `You are the official Sportix Salon Interactive Virtu
 Sportix Salon is the premium business roadshow of sports innovation, sports tech, broadcasting, media, sponsorships, and stadium infrastructure across Africa.
 The user is viewing the Sportix Salon Interactive Website. Here is the context of what they can do on this site:
 1. "Constellation Orbite" / "Orbit Constellation Mode":
-   - Displays a rotating starfield with 5 major roadshow destinations linked together in a shining celestial circle.
+   - Displays a rotating starfield with 6 major roadshow destinations linked together in a shining celestial circle.
    - User rotates through them or pauses/plays this rotation using a toggle button at the bottom of the orbit interface.
    - User can hover over nodes or click them to deep dive.
-2. The 5 Destinations (Roadshow Calendar):
+2. The 6 Destinations (Roadshow Calendar):
    - DOUALA (Cameroun): Septembre 2026. Focus: Central African sports tech ecosystem, startups, and media retransmission.
    - YAOUNDÉ (Cameroun): Mars 2027. Focus: Sports governance, national athletics structures, public-private sport-business.
    - COYONOU (Bénin): Avril 2027. Focus: Professional training, athletic academies, performance bio-data.
    - CAN 2027 (Nairobi, Kenya): Juillet 2027. Special Edition in tandem with the Africa Cup of Nations. Focus: East-African sportech, fan engagement, and smart arenas.
    - ABIDJAN (Côte d'Ivoire): Novembre 2027. Focus: West-African elite sports diplomacy, arena monetization, and branding.
+   - CASABLANCA (Maroc): Mai 2028. Focus: Elite sport alliances, Moroccan tech capability, and football business development.
 3. Interactive Features on the Detail Dashboard:
    - Dynamic Live Countdown: Calculates precise days, hours, minutes, and seconds until the respective salon launch.
-   - "Être notifié" (Get Notified Popup): Allows users to type their email and select their profile (Visiteur, Conférencier, Partenaire/Sponsor, Média/Presse) to secure early-bird updates.
+   - "Être notifié" (Get Notified Popup): Allows users to type their email and select their profile to secure early-bird updates.
    - "Ajouter au calendrier" (Add to Calendar button): Downloads an active .ics file so they can join the Outlook, Apple, or Google calendar.
+   - General email for inquiries is salon-sportix@yahoo.com.
    - Lower Fold Details: Showcases key statistics (Speakers, Expected visitors, specialized arenas), 4 main technology focus pillars, and prestigious sponsors (Nike, Orange, Canal+, Intel, etc.).
 
 Keep your responses professional, elegant, polite, and in French (since the site is primarily in French), but respond in English if the user asks in English. Speak dynamically like a modern high-end sports technology advisor.`;
@@ -62,24 +64,26 @@ app.post('/api/support/message', async (req, res) => {
       console.log("Using Mock AI helper response due to missing GEMINI_API_KEY");
       const lastMessageObj = messages[messages.length - 1];
       const userText = (lastMessageObj?.content || lastMessageObj?.message || '').toLowerCase();
-      let replyMessage = "Bonjour ! Je suis l'assistant officiel de Sportix Salon. Comment puis-je vous guider à travers nos 5 destinations de roadshow d'élite (Douala, Yaoundé, Cotonou, Nairobi et Abidjan) ?";
+      let replyMessage = "Bonjour ! Je suis l'assistant officiel de Sportix Salon. Comment puis-je vous guider à travers nos 6 destinations de roadshow d'élite (Douala, Yaoundé, Cotonou, Nairobi, Abidjan et Casablanca) ? Écrivez-nous à salon-sportix@yahoo.com.";
       
       if (userText.includes('douala')) {
-        replyMessage = "Sportix Douala aura lieu en Septembre 2026 au Cameroun ! C'est le premier salon d'Afrique Centrale dédié à l'innovation média et sports tech. Vous pouvez cliquer sur le nœud Douala sur l'orbite pour voir le compte à rebours et vous inscrire.";
+        replyMessage = "Sportix Douala aura lieu du 24 au 26 Septembre 2026 au Cameroun ! C'est le premier salon d'Afrique Centrale dédié à l'innovation média et sports tech. Vous pouvez cliquer sur le nœud Douala sur l'orbite pour voir le compte à rebours et vous inscrire.";
       } else if (userText.includes('yaound')) {
-        replyMessage = "Sportix Yaoundé se tiendra en Mars 2027 au Cameroun. Cette édition se focalisera sur la gouvernance sportive et le sport-business public-privé.";
+        replyMessage = "Sportix Yaoundé se tiendra en Mars 2027 au Cameroun. Cette édition se focalisera sur la gouvernance sportive et le sport-business public-privé. Écrivez à salon-sportix@yahoo.com pour devenir partenaire.";
       } else if (userText.includes('abidjan')) {
         replyMessage = "Abidjan accueillera Sportix en Novembre 2027, après les triomphes de la CAN, axé sur la diplomatie sportive internationale et le sponsoring de marque.";
       } else if (userText.includes('cotonou')) {
         replyMessage = "Sportix Cotonou aura lieu au Bénin en Avril 2027. Ce salon est centré sur la formation d'élite, la médecine du sport et la gestion des académies.";
       } else if (userText.includes('can') || userText.includes('nairobi') || userText.includes('kenya')) {
         replyMessage = "L'édition spéciale CAN 2027 au Kenya (Nairobi) aura lieu en Juillet 2027 pour coïncider avec la Coupe d'Afrique des Nations ! On y parlera d'arènes intelligentes, de retransmission immersive et de fan engagement.";
+      } else if (userText.includes('casablanca') || userText.includes('maroc')) {
+        replyMessage = "L'édition de Sportix Casablanca aura lieu au Maroc en Mai 2028 (et non en Juin) ! Elle réunira le sport d'élite, l'expertise technologique marocaine et les grandes alliances de l'industrie du football. Contactez-nous sur salon-sportix@yahoo.com.";
       } else if (userText.includes('calendrier') || userText.includes('ics') || userText.includes('date')) {
         replyMessage = "Chaque page de destination comporte un bouton 'Ajouter au calendrier'. En cliquant dessus, vous téléchargerez un fichier standard .ics pour l'importer instantanément sur Google Calendar, Apple Calendar ou Outlook !";
       } else if (userText.includes('notifi') || userText.includes('inscri') || userText.includes('email') || userText.includes('alerte')) {
         replyMessage = "Pour rester informé en temps réel, rendez-vous sur la destination de votre choix et cliquez sur le bouton blanc éclair 'Être notifié'. Un formulaire s'ouvrira pour choisir votre profil (Visiteur, Partenaire, Média ou Intervenant) !";
       } else if (userText.includes('orbite') || userText.includes('tourne') || userText.includes('constellation') || userText.includes('rotat')) {
-        replyMessage = "La page d'accueil affiche une constellation dynamique de nos 5 salons. Nous l'avons rendue entièrement interactive : vous pouvez l'arrêter ou la relancer grâce au bouton en bas 'Lancer/Pause l'Orbite'. Chaque nœud est cliquable !";
+        replyMessage = "La page d'accueil affiche une constellation dynamique de nos 6 salons. Nous l'avons rendue entièrement interactive : vous pouvez l'arrêter ou la relancer grâce au bouton en bas 'Lancer/Pause l'Orbite'. Chaque nœud est cliquable !";
       }
 
       return res.json({ text: replyMessage });

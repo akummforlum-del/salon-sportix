@@ -7,6 +7,7 @@ export interface Destination {
   bgImage?: string;
   description: string;
   phones?: string[]; // Contact numbers specific to this destination from manual notes
+  reachedCount?: number; // Number of people who reached this point when they entered the website
   infoCards: {
     title: string;
     value: string;

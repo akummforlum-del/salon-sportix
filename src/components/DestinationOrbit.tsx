@@ -4,7 +4,8 @@ import { MapPin, Trophy, Play, Pause, Compass, HelpCircle, LogIn, Users, Phone, 
 import SportixLogo from './SportixLogo';
 import { Destination } from '../types';
 import { DESTINATIONS } from '../data';
-import bgImg from '../assets/images/luxury_stadium_suite_1779405467052.png';
+import bgImg from '../assets/images/sportix_diverse_leaders_1779746487360.png';
+import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 interface DestinationOrbitProps {
   onSelectDestination: (destination: Destination) => void;
@@ -109,6 +110,7 @@ export default function DestinationOrbit({ onSelectDestination, onOpenAiHelp, ac
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Live Visitors Counter System */}
           <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2.5 py-1">
+            <Globe className="w-3 h-3 text-emerald-400" />
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
@@ -208,7 +210,7 @@ export default function DestinationOrbit({ onSelectDestination, onOpenAiHelp, ac
                   {isDouala && (
                     <span className="absolute -top-3.5 bg-amber-500 text-black text-[7px] font-bold tracking-widest px-1.5 py-0.5 rounded-full shadow-lg border border-amber-300/40 uppercase scale-90 sm:scale-100 flex items-center gap-0.5">
                       <span className="w-1 h-1 rounded-full bg-black animate-ping" />
-                      Actif
+                      Next
                     </span>
                   )}
                   
@@ -251,43 +253,75 @@ export default function DestinationOrbit({ onSelectDestination, onOpenAiHelp, ac
 
       </main>
 
-      {/* Front Contact & Support Desk (Requested: MTN, Orange support & Email front desk) */}
-      <section className="w-full max-w-4xl mx-auto mb-4 bg-black/45 border border-white/5 p-4 rounded-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-            <Phone className="w-4 h-4 text-amber-500" />
+      {/* Front Contact, Support & Collaborator Desk */}
+      <section className="w-full max-w-4xl mx-auto mb-6 bg-black/45 border border-white/5 p-5 rounded-2xl backdrop-blur-md flex flex-col lg:flex-row items-stretch gap-6 text-xs">
+        {/* Left Side: Support Phone Numbers */}
+        <div className="flex-1 flex flex-col justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+              <Phone className="w-4 h-4 text-amber-500" />
+            </div>
+            <div className="text-left">
+              <span className="text-[10px] font-mono text-gray-500 block">SUPPORT ACCUEIL DE PIQUET</span>
+              <span className="text-gray-300 font-medium">Assistance Téléphonique Immédiate :</span>
+            </div>
           </div>
-          <div className="text-left">
-            <span className="text-[10px] font-mono text-gray-500 block">SUPPORT ACCUEIL DE PIQUET</span>
-            <span className="text-gray-300 font-medium">Assistance Téléphonique Immédiate :</span>
+          
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Orange Cameroun */}
+            <div className="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 px-3 py-1.5 rounded-lg" title="Support Orange Cameroun">
+              <div className="w-2 h-2 rounded-full bg-orange-500" />
+              <span className="font-mono text-[10px] text-gray-400">Orange:</span>
+              <a href="tel:+237694885086" className="font-mono font-bold text-white hover:text-orange-400 transition-colors">
+                +237 694 88 50 86
+              </a>
+            </div>
+
+            {/* MTN Support */}
+            <div className="flex items-center gap-1.5 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg" title="Support MTN Cameroun">
+              <div className="w-2 h-2 rounded-full bg-amber-400" />
+              <span className="font-mono text-[10px] text-gray-400">MTN:</span>
+              <a href="tel:+237654152499" className="font-mono font-bold text-white hover:text-amber-400 transition-colors">
+                +237 654 15 24 99
+              </a>
+            </div>
+
+            {/* General Consulting Email */}
+            <div className="flex items-center gap-1.5 bg-rose-500/10 border border-rose-500/20 px-3 py-1.5 rounded-lg" title="Consulting Email">
+              <Mail className="w-3.5 h-3.5 text-rose-450" />
+              <a href="mailto:salon-sportix@yahoo.com" className="font-mono text-[10px] text-white hover:text-rose-450 transition-colors font-semibold">
+                salon-sportix@yahoo.com
+              </a>
+            </div>
           </div>
         </div>
-        
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-end">
-          {/* Orange Cameroon Lady in Orange icon representation */}
-          <div className="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 px-3 py-1.5 rounded-lg" title="Support Orange Cameroun">
-            <div className="w-2 h-2 rounded-full bg-orange-500" />
-            <span className="font-mono text-[10px] text-gray-400">Orange:</span>
-            <a href="tel:+237694885086" className="font-mono font-bold text-white hover:text-orange-400 transition-colors">
-              +237 694 88 50 86
-            </a>
-          </div>
 
-          {/* MTN Support */}
-          <div className="flex items-center gap-1.5 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg" title="Support MTN Cameroun">
-            <div className="w-2 h-2 rounded-full bg-amber-400" />
-            <span className="font-mono text-[10px] text-gray-400">MTN:</span>
-            <a href="tel:+237654152499" className="font-mono font-bold text-white hover:text-amber-400 transition-colors">
-              +237 654 15 24 99
-            </a>
-          </div>
+        {/* Dynamic Vertical Separator */}
+        <div className="hidden lg:block w-px bg-white/10" />
+        <div className="block lg:hidden h-px bg-white/10 w-full" />
 
-          {/* General Consulting Email */}
-          <div className="flex items-center gap-1.5 bg-rose-500/10 border border-rose-500/20 px-3 py-1.5 rounded-lg" title="Consulting Email">
-            <Mail className="w-3.5 h-3.5 text-rose-400" />
-            <a href="mailto:consulting@yahoo.com" className="font-mono text-[10px] text-white hover:text-rose-450 transition-colors font-semibold">
-              consulting@yahoo.com
-            </a>
+        {/* Right Side: Collaborators Group Code */}
+        <div className="flex flex-col justify-center gap-2.5 shrink-0">
+          <div className="text-center lg:text-left">
+            <span className="text-[9px] font-mono text-[#d4af37] tracking-[0.3em] uppercase block">ESPACE COLLABORATEURS</span>
+            <span className="text-[10px] font-sans font-bold text-gray-300">Partenaires Officiels de Liaison :</span>
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5">
+            {/* Inside Sports */}
+            <div className="hover:scale-105 transition-transform duration-300">
+              <InsideSportsLogo className="h-7" />
+            </div>
+
+            {/* Felin */}
+            <div className="hover:scale-105 transition-transform duration-300 w-[65px] flex items-center justify-center">
+              <FelinLogo className="h-5" />
+            </div>
+
+            {/* Sport-theque */}
+            <div className="hover:scale-105 transition-transform duration-300">
+              <SportThequeLogo className="h-7" />
+            </div>
           </div>
         </div>
       </section>
@@ -295,27 +329,35 @@ export default function DestinationOrbit({ onSelectDestination, onOpenAiHelp, ac
       {/* Orbit Controls & Footer Instructions */}
       <footer className="w-full flex flex-col items-center gap-4 z-10">
         
-        {/* Play/Pause control state button */}
-        <div className="flex items-center gap-3 bg-black/40 border border-white/5 rounded-full px-5 py-2.5 backdrop-blur-md">
-          <button
-            onClick={() => setIsRotating(!isRotating)}
-            className="flex items-center gap-2 group cursor-pointer text-gray-400 hover:text-white transition-colors text-xs font-mono select-none"
-          >
-            {isRotating ? (
-              <>
-                <Pause className="w-4 h-4 text-rose-400" />
-                <span>Pause l'Orbite</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-4 h-4 text-emerald-400" />
-                <span>Lancer l'Orbite</span>
-              </>
-            )}
-          </button>
+        {/* Live and Visite indicators badge */}
+        <div className="flex items-center gap-4 bg-black/40 border border-white/5 rounded-full px-5 py-2.5 backdrop-blur-md select-none shrink-0 shadow-lg">
+          {/* Live indicator */}
+          <div className="flex items-center gap-1.5 text-emerald-450 font-mono text-xs">
+            <Globe className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+            </span>
+            <span className="font-bold">{activeCount}</span>
+            <span className="text-gray-400 font-light text-[10px]">EN LIGNE</span>
+          </div>
+
           <span className="h-4 w-[1px] bg-white/10" />
-          <span className="text-[10px] font-mono text-gray-500 text-center select-none">
-            {isHovered ? '🔒 Figé (survol)' : isRotating ? '⚙️ Révolution Active' : '⏸️ En Pause'}
+
+          {/* Visite indicator */}
+          <div className="flex items-center gap-1.5 text-amber-500 font-mono text-xs">
+            <span className="relative flex h-2 w-2 items-center justify-center">
+              <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-amber-400/30 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+            </span>
+            <span className="font-bold">{totalVisits.toLocaleString()}</span>
+            <span className="text-gray-400 font-light text-[10px]">VISITES</span>
+          </div>
+
+          <span className="h-4 w-[1px] bg-white/10" />
+
+          <span className="text-[9px] font-mono text-gray-500 tracking-wide">
+            {isHovered ? '🔒 FIGÉ (SURVOL)' : '⚙️ SYSTÈME ACTIF'}
           </span>
         </div>
 

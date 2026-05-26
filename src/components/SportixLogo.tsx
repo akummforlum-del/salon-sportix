@@ -8,6 +8,13 @@ interface SportixLogoProps {
 export default function SportixLogo({ className = '', showSubtitle = true }: SportixLogoProps) {
   return (
     <div className={`flex flex-col items-center justify-center select-none ${className}`}>
+      {/* Subtitle "SALON" on top with wide letter-spacing */}
+      {showSubtitle && (
+        <span className="text-[10px] font-mono tracking-[0.6em] text-gray-400 mb-2 uppercase pl-[0.6em]">
+          S A L O N
+        </span>
+      )}
+
       {/* Logo Icon and Mark combined */}
       <div className="flex items-center gap-2">
         {/* Customized Lightning Bolt SVG */}
@@ -36,13 +43,6 @@ export default function SportixLogo({ className = '', showSubtitle = true }: Spo
           sportix
         </span>
       </div>
-
-      {/* Subtitle "SALON" with dynamic wide letter-spacing */}
-      {showSubtitle && (
-        <span className="text-[10px] font-mono tracking-[0.6em] text-gray-400 mt-1 uppercase pl-[0.6em]">
-          S A L O N
-        </span>
-      )}
     </div>
   );
 }

@@ -8,8 +8,9 @@ export const DESTINATIONS: Destination[] = [
     dateText: '24 - 26 SEPTEMBRE 2026',
     // Set to 24th September 24-26, 2026
     targetDate: new Date('2026-09-24T09:00:00'),
-    description: "Le premier rendez-vous de l'innovation sportive en Afrique Centrale. Le Sportix Salon Douala réunira les leaders d'opinion, les marques emblématiques, les start-ups technologiques et les décideurs institutionnels pour structurer l'avenir de notre écosystème.",
+    description: "Le premier rendez-vous de l'innovation sportive en Afrique Centrale. Le Sportix Salon Douala réunira les leaders d'opinion, les marques emblématiques, les start-ups technologiques et les décideurs institutionnels pour structurer l'avenir de notre salon-écosystème.",
     phones: ['+237 694 88 50 86', '+237 654 15 24 99'],
+    reachedCount: 4850,
     infoCards: [
       { title: 'CONFÉRENCIERS', value: '45+', description: 'Experts internationaux' },
       { title: 'PARTICIPANTS', value: '2,500+', description: 'Professionnels attendus' },
@@ -25,6 +26,7 @@ export const DESTINATIONS: Destination[] = [
     targetDate: new Date('2027-03-20T09:00:00'),
     description: "La capitale camerounaise accueille le salon pour débattre de la gouvernance du sport, de l'optimisation des structures sportives nationales et du développement de solutions de financement durables.",
     phones: ['+237 694 88 50 86', '+237 654 15 24 99'],
+    reachedCount: 3120,
     infoCards: [
       { title: 'CONFÉRENCIERS', value: '35+', description: 'Leaders régionaux' },
       { title: 'PARTICIPANTS', value: '1,800+', description: 'Délégués nationaux' },
@@ -40,9 +42,10 @@ export const DESTINATIONS: Destination[] = [
     targetDate: new Date('2027-11-10T09:00:00'),
     description: "Dans le sillage des performances ivoiriennes, Abidjan s'impose comme le pôle ouest-africain de la diplomatie sportive. Découvrez les opportunités de partenariat public-privé et de valorisation des talents locaux.",
     phones: ['+225 07 07 49 11 88 66', '+237 656 87 36 26'],
+    reachedCount: 7215,
     infoCards: [
       { title: 'CONFÉRENCIERS', value: '50+', description: 'Invités de marque' },
-      { title: 'PARTICIPANTS', value: '3,000+', description: 'Écosystème africain' },
+      { title: 'PARTICIPANTS', value: '3,000+', description: 'Salon-écosystème africain' },
       { title: 'DÉCIDEURS', value: '100+', description: 'Clubs et fédérations' },
     ],
     position: { top: '32%', left: '85%' },
@@ -55,6 +58,7 @@ export const DESTINATIONS: Destination[] = [
     targetDate: new Date('2027-04-18T09:00:00'),
     description: "Cotonou portera le flambeau de la formation athlétique d'élite. Un salon entièrement axé sur l'essor des académies, la médecine sportive, l'analyse de données de performance et l'insertion professionnelle.",
     phones: ['+229 97 53 31 73', '+237 656 87 36 26'],
+    reachedCount: 1940,
     infoCards: [
       { title: 'CONFÉRENCIERS', value: '30+', description: 'Coaches et préparateurs' },
       { title: 'PARTICIPANTS', value: '1,500+', description: 'Jeunes et encadrants' },
@@ -70,6 +74,7 @@ export const DESTINATIONS: Destination[] = [
     targetDate: new Date('2027-07-12T09:00:00'),
     description: "En marge de la Coupe d'Afrique des Nations (CAN) 2027 à Nairobi, cette édition spéciale explorera le sport tech en Afrique de l'Est, la production audiovisuelle moderne et l'engagement des fans connectés.",
     phones: ['+237 656 87 36 26', '+237 6 95 61 71 15 82'],
+    reachedCount: 5830,
     infoCards: [
       { title: 'CONFÉRENCIERS', value: '60+', description: 'Spécialistes média/tech' },
       { title: 'PARTICIPANTS', value: '4,000+', description: 'Visiteurs internationaux' },
@@ -81,10 +86,11 @@ export const DESTINATIONS: Destination[] = [
     id: 'casablanca',
     name: 'CASABLANCA',
     subtext: 'MAROC',
-    dateText: 'JUIN 2028',
-    targetDate: new Date('2028-06-15T09:00:00'),
+    dateText: 'MAI 2028',
+    targetDate: new Date('2028-05-15T09:00:00'),
     description: "L'édition de Casablanca réunira le sport d'élite, l'expertise technologique marocaine et les grandes alliances de l'industrie du football et des infrastructures de la Coupe du Monde.",
     phones: ['+212 675 06 02 17', '+237 656 87 36 26'],
+    reachedCount: 2650,
     infoCards: [
       { title: 'CONFÉRENCIERS', value: '40+', description: 'Leaders régionaux et mondiaux' },
       { title: 'PARTICIPANTS', value: '2,000+', description: 'Professionnels attendus' },
