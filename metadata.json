@@ -1,6 +1,6 @@
 {
-  "name": "Remix: Sportix Salon",
-  "description": "An interactive web platform for the Sportix Salon roadshow destinations, featuring a destination selector, dual-vibe dashboard layouts, interactive countdown timers, calendar additions, and custom notifications.",
+  "name": "Remix: Salon Sportix",
+  "description": "An interactive web platform for the Salon Sportix roadshow destinations, featuring a destination selector, dual-vibe dashboard layouts, interactive countdown timers, calendar additions, and custom notifications.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

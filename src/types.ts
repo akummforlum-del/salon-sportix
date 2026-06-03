@@ -29,3 +29,20 @@ export interface SubscriptionData {
   interest: 'visitor' | 'speaker' | 'sponsor' | 'media' | 'expo';
 }
 
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: 'Organisateur' | 'Partenaire' | 'Visiteur' | 'Intervenant';
+  company?: string;
+  avatar: string;
+}
+
+export interface LiveVisitor {
+  sessionId: string;
+  location: string;
+  currentPath: string;
+  role: string;
+  isYou: boolean;
+}
+

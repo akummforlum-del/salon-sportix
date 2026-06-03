@@ -1,22 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { MessageSquare, Sparkles } from 'lucide-react';
-import { Destination, ViewMode } from './types';
+import { Destination, ViewMode, User, LiveVisitor } from './types';
 import { DESTINATIONS } from './data';
 import DestinationOrbit from './components/DestinationOrbit';
 import DestinationDetail from './components/DestinationDetail';
 import AiHelpWidget from './components/AiHelpWidget';
+import LiveAudienceRadar from './components/LiveAudienceRadar';
+import LoginModal from './components/LoginModal';
 
 export default function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('orbit');
   const [selectedDestination, setSelectedDestination] = useState<Destination>(DESTINATIONS[0]);
   const [isAiHelpOpen, setIsAiHelpOpen] = useState(false);
 
-  // Real-time server-synced visitor counts
+  // Real-time server-synced visitor counts & feed
   const [activeCount, setActiveCount] = useState(33);
-  const [totalVisits, setTotalVisits] = useState(412);
+  const [totalVisits, setTotalVisits] = useState(1438);
+  const [liveFeed, setLiveFeed] = useState<LiveVisitor[]>([]);
+  const [isRadarOpen, setIsRadarOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  
+  // Real authenticated user state
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      const saved = localStorage.getItem('sportix_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
 
-  // Synchronize live visitors with backend
+  const handleLoginSuccess = (loggedInUser: User) => {
+    setUser(loggedInUser);
+    localStorage.setItem('sportix_user', JSON.stringify(loggedInUser));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('sportix_user');
+  };
+
+  // Synchronize live visitors with backend, passing page and login identities
   useEffect(() => {
     let id = sessionStorage.getItem('sportix_session_id');
     if (!id) {
@@ -27,12 +52,20 @@ export default function App() {
 
     const sendHeartbeat = async () => {
       try {
+        const payload = {
+          sessionId,
+          location: user ? `${user.company || 'Réseau'} - ${user.name}` : 'Paris, France (Internet)',
+          currentPath: viewMode === 'orbit' ? 'Constellation' : `Salon ${selectedDestination.name}`,
+          rname: user?.name || null,
+          rrole: user?.role || null
+        };
+
         const res = await fetch('/api/visitors/heartbeat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ sessionId })
+          body: JSON.stringify(payload)
         });
         if (res.ok) {
           const data = await res.json();
@@ -41,6 +74,9 @@ export default function App() {
           }
           if (data && typeof data.totalVisits === 'number') {
             setTotalVisits(data.totalVisits);
+          }
+          if (data && Array.isArray(data.liveFeed)) {
+            setLiveFeed(data.liveFeed);
           }
         }
       } catch (err) {
@@ -51,7 +87,7 @@ export default function App() {
     sendHeartbeat();
     const intervalId = setInterval(sendHeartbeat, 4000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [user?.id, viewMode, selectedDestination.id]);
 
   const handleSelectDestination = (destination: Destination) => {
     setSelectedDestination(destination);
@@ -83,6 +119,10 @@ export default function App() {
               onOpenAiHelp={() => setIsAiHelpOpen(true)}
               activeCount={activeCount}
               totalVisits={totalVisits}
+              user={user}
+              onLogout={handleLogout}
+              onOpenLogin={() => setIsLoginOpen(true)}
+              onOpenRadar={() => setIsRadarOpen(true)}
             />
           </motion.div>
         ) : (
@@ -101,6 +141,10 @@ export default function App() {
               onOpenAiHelp={() => setIsAiHelpOpen(true)}
               activeCount={activeCount}
               totalVisits={totalVisits}
+              user={user}
+              onLogout={handleLogout}
+              onOpenLogin={() => setIsLoginOpen(true)}
+              onOpenRadar={() => setIsRadarOpen(true)}
             />
           </motion.div>
         )}
@@ -123,6 +167,22 @@ export default function App() {
         </div>
         <span className="text-xs tracking-wide">Assistant IA</span>
       </motion.button>
+
+      {/* Real-time Audience monitor panel drawer */}
+      <LiveAudienceRadar 
+        isOpen={isRadarOpen} 
+        onClose={() => setIsRadarOpen(false)} 
+        liveFeed={liveFeed}
+        activeCount={activeCount}
+        totalVisits={totalVisits}
+      />
+
+      {/* Login System Modal */}
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onClose={() => setIsLoginOpen(false)} 
+        onLoginSuccess={handleLoginSuccess}
+      />
 
       {/* AI Assistant Drawer Widget */}
       <AiHelpWidget isOpen={isAiHelpOpen} onClose={() => setIsAiHelpOpen(false)} />

@@ -13,17 +13,52 @@ interface Message {
 }
 
 const SUGGESTIONS = [
-  "Qu'est-ce que Sportix Salon ?",
+  "Qu'est-ce que Salon Sportix ?",
+  "Détails de l'édition Casablanca ?",
   "Comment m'abonner aux alertes ?",
-  "Quels sont les thèmes du roadshow ?",
   "Comment ajouter une date à mon agenda ?",
 ];
+
+const renderMessageContent = (content: string, isAssistant: boolean) => {
+  const lines = content.split('\n');
+  return lines.map((line, lineIdx) => {
+    const isBullet = line.trim().startsWith('-') || line.trim().startsWith('*');
+    const cleanLine = isBullet ? line.replace(/^[-*]\s*/, '') : line;
+
+    const parts = cleanLine.split('**');
+    const formattedText = parts.map((part, partIdx) => {
+      if (partIdx % 2 === 1) {
+        return (
+          <strong key={partIdx} className={isAssistant ? "text-white font-bold" : "text-amber-100 font-extrabold"}>
+            {part}
+          </strong>
+        );
+      }
+      return part;
+    });
+
+    if (isBullet) {
+      return (
+        <div key={lineIdx} className="flex items-start gap-1.5 ml-1 my-1">
+          <span className={isAssistant ? "text-rose-400 mt-1 shrink-0" : "text-white mt-1 shrink-0"}>•</span>
+          <span>{formattedText}</span>
+        </div>
+      );
+    }
+
+    return (
+      <p key={lineIdx} className={lineIdx > 0 ? 'mt-1.5' : ''}>
+        {formattedText}
+      </p>
+    );
+  });
+};
 
 export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Bonjour ! Je suis l'assistant intelligent officiel de **Sportix Salon**. Je suis là pour vous aider à explorer notre roadshow d'élite sur le continent africain (Douala, Yaoundé, Cotonou, Nairobi & Abidjan). Posez-moi vos questions !",
+      content: "Bonjour ! Je suis l'assistant intelligent officiel de **Salon Sportix**.\n\nJe suis là pour vous aider à explorer notre **roadshow d'élite** sur le continent africain à travers nos 6 destinations d'exception :\n\n- **Douala** (Septembre 2026)\n- **Yaoundé** (Mars 2027)\n- **Cotonou** (Avril 2027)\n- **Nairobi** (Juillet 2027)\n- **Abidjan** (Novembre 2027)\n- **Casablanca** (Mai 2028)\n\nPosez-moi vos questions sur le programme, les thèmes ou comment participer !",
     },
   ]);
   const [inputText, setInputText] = useState('');
@@ -80,7 +115,7 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
     setMessages([
       {
         role: 'assistant',
-        content: "Historique réinitialisé. Je suis de nouveau à votre écoute pour vous guider à travers les 5 destinations Sportix Salon !",
+        content: "Historique réinitialisé. Je suis de nouveau à votre écoute pour vous guider à travers les 6 destinations Salon Sportix !",
       },
     ]);
   };
@@ -156,12 +191,10 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
                           : 'bg-rose-500 text-white rounded-tr-sm font-medium shadow-md shadow-rose-950/20'
                       }`}
                     >
-                      {/* Simple custom markdown style text formatting */}
-                      <p className="whitespace-pre-line">
-                        {msg.content.split('**').map((part, i) => (
-                          i % 2 === 1 ? <strong key={i} className="text-white font-semibold">{part}</strong> : part
-                        ))}
-                      </p>
+                      {/* Rich styled renderer for lists and bold tags */}
+                      <div className="space-y-1">
+                        {renderMessageContent(msg.content, isAssistant)}
+                      </div>
                     </div>
                   </div>
                 );

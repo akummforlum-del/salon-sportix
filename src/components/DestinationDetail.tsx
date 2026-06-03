@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  ChevronLeft, Menu, Bell, Calendar, Sparkles, Instagram, Facebook, Twitter, Youtube, CheckCircle, X, Phone, Globe
+  ChevronLeft, Menu, Bell, Calendar, Sparkles, Instagram, Facebook, Twitter, Youtube, CheckCircle, X, Phone, Globe, LogIn
 } from 'lucide-react';
-import { Destination } from '../types';
+import { Destination, User } from '../types';
 import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
-import bgImg from '../assets/images/sportix_diverse_leaders_1779746487360.png';
+import bgImg from '../assets/images/sportix_studio_inclusive_vip_1780486973993.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
+
 
 interface DestinationDetailProps {
   currentDestination: Destination;
@@ -17,6 +18,10 @@ interface DestinationDetailProps {
   onOpenAiHelp?: () => void;
   activeCount: number;
   totalVisits: number;
+  user: User | null;
+  onLogout: () => void;
+  onOpenLogin: () => void;
+  onOpenRadar: () => void;
 }
 
 export default function DestinationDetail({ 
@@ -25,7 +30,11 @@ export default function DestinationDetail({
   onNavigateToDestination,
   onOpenAiHelp,
   activeCount,
-  totalVisits
+  totalVisits,
+  user,
+  onLogout,
+  onOpenLogin,
+  onOpenRadar
 }: DestinationDetailProps) {
   const [timeLeft, setTimeLeft] = useState({ days: 112, hours: 14, minutes: 36, seconds: 52 });
   const [isNotifyOpen, setIsNotifyOpen] = useState(false);
@@ -36,21 +45,68 @@ export default function DestinationDetail({
   // Cumulative live counter ticking up continuously in real-time
   const [cumulativeInscriptions, setCumulativeInscriptions] = useState(0);
 
+  // Real live system helper to record page views and fetch current statistics
   useEffect(() => {
-    // Generate a beautiful base count depending on city
-    let baseCount = 3450;
-    if (currentDestination.id === 'douala') baseCount = 5820;
-    else if (currentDestination.id === 'yaounde') baseCount = 3120;
-    else if (currentDestination.id === 'abidjan') baseCount = 7430;
-    else if (currentDestination.id === 'cotonou') baseCount = 2190;
-    else if (currentDestination.id === 'nairobi') baseCount = 6880;
-    else if (currentDestination.id === 'casablanca') baseCount = 3760;
+    let id = sessionStorage.getItem('sportix_session_id');
+    if (!id) {
+      id = 'sp_sess_' + Math.random().toString(36).substring(2, 10);
+      sessionStorage.setItem('sportix_session_id', id);
+    }
+    const sessionId = id;
 
-    setCumulativeInscriptions(baseCount);
+    const recordEntryAndSync = async () => {
+      try {
+        const res = await fetch('/api/visitors/enter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ destinationId: currentDestination.id, sessionId })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.currentCount === 'number') {
+            setCumulativeInscriptions(data.currentCount);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Real live entry register error, using offline default:", err);
+      }
 
-    const interval = setInterval(() => {
-      setCumulativeInscriptions(prev => prev + Math.floor(Math.random() * 2) + 1);
-    }, 2500);
+      // Offline seed fallbacks if connection is lost
+      let baseCount = 3450;
+      if (currentDestination.id === 'douala') baseCount = 5820;
+      else if (currentDestination.id === 'yaounde') baseCount = 3120;
+      else if (currentDestination.id === 'abidjan') baseCount = 7430;
+      else if (currentDestination.id === 'cotonou') baseCount = 2190;
+      else if (currentDestination.id === 'nairobi') baseCount = 6880;
+      else if (currentDestination.id === 'casablanca') baseCount = 3760;
+      setCumulativeInscriptions(baseCount);
+    };
+
+    recordEntryAndSync();
+
+    // Setup live continuous polling to aggregate views as other people enter the site
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch('/api/visitors/heartbeat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId,
+            currentPath: `Salon ${currentDestination.name}`
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.destinationVisits && typeof data.destinationVisits[currentDestination.id] === 'number') {
+            setCumulativeInscriptions(data.destinationVisits[currentDestination.id]);
+          }
+        }
+      } catch (e) {
+        // Fallback local visual addition to represent traffic continuous simulation
+        setCumulativeInscriptions(prev => prev + Math.floor(Math.random() * 2) + 1);
+      }
+    }, 3500);
 
     return () => clearInterval(interval);
   }, [currentDestination.id]);
@@ -92,7 +148,7 @@ UID:sportix-${currentDestination.id}-${Date.now()}
 DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'}
 DTSTART:${dateFormatted}
 DTEND:${dateFormatted}
-SUMMARY:Sportix Salon ${currentDestination.name}
+SUMMARY:Salon Sportix ${currentDestination.name}
 DESCRIPTION:Le grand rendez-vous de l'innovation et de l'économie sportive en Afrique. Rejoignez-nous !
 LOCATION:${currentDestination.name}, ${currentDestination.subtext}
 STATUS:CONFIRMED
@@ -124,7 +180,7 @@ END:VCALENDAR`;
         
         {/* Top Logo */}
         <div className="px-2 md:px-6 mb-8 cursor-pointer" onClick={onBackToOrbit}>
-          <SportixLogo className="scale-85 md:scale-100" showSubtitle={true} />
+          <SportixLogo className="scale-85 md:scale-100" showSubtitle={true} placeName={currentDestination.name} />
         </div>
 
         {/* Medium Nav List */}
@@ -195,7 +251,7 @@ END:VCALENDAR`;
 
           {/* Copyright description */}
           <p className="hidden md:block text-[8px] font-mono tracking-widest text-center text-gray-600 leading-relaxed uppercase">
-            © SPORTIX SALON<br />TOUS DROITS RÉSERVÉS
+            © SALON SPORTIX<br />TOUS DROITS RÉSERVÉS
           </p>
         </div>
       </aside>
@@ -218,23 +274,31 @@ END:VCALENDAR`;
 
           <div className="flex items-center gap-3">
             {/* Live Visitors Stats */}
-            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-2.5 py-1.5 h-11">
+            <button
+              onClick={onOpenRadar}
+              className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/25 px-2.5 py-1.5 h-11 rounded-xl cursor-pointer transition-all select-none"
+              title="Ouvrir la Console d'Audience Live"
+            >
               <Globe className="w-3.5 h-3.5 text-emerald-400" />
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
               </span>
               <span>{activeCount} en ligne</span>
-            </div>
+            </button>
 
-            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-xl px-2.5 py-1.5 h-11" title="Visiteurs uniques sur ce salon">
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-xl px-2.5 py-1.5 h-11 select-none" title="Visiteurs uniques sur ce salon">
               <Globe className="w-3.5 h-3.5 text-amber-500" />
-              <span>{(currentDestination.reachedCount || 2350).toLocaleString()} consultés</span>
+              <span>{cumulativeInscriptions.toLocaleString()} consultés</span>
             </div>
             
-            <div className="hidden select-none md:flex items-center text-[10px] sm:text-xs font-mono text-slate-400 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 h-11">
+            <button 
+              onClick={onOpenRadar}
+              className="hidden select-none md:flex items-center text-[10px] sm:text-xs font-mono text-slate-400 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 h-11 cursor-pointer hover:bg-white/10 transition-all"
+              title="Ouvrir la Console d'Audience Live"
+            >
               <span>{totalVisits} visites</span>
-            </div>
+            </button>
 
             {onOpenAiHelp && (
               <motion.button
@@ -246,6 +310,36 @@ END:VCALENDAR`;
                 <Sparkles className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
                 <span className="hidden sm:inline">Aide IA</span>
               </motion.button>
+            )}
+
+            {/* Log-In Options Space */}
+            {user ? (
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl pl-2.5 pr-3 h-11 text-[11px] font-sans hover:bg-white/8 transition-colors select-none">
+                <img 
+                  src={user.avatar} 
+                  alt={user.name} 
+                  className="w-5 h-5 rounded-full object-cover border border-white/20"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="text-left leading-none hidden xs:block">
+                  <span className="text-white font-bold block max-w-[85px] truncate">{user.name}</span>
+                  <span className="text-[7.5px] font-mono text-amber-500 font-bold tracking-wider block mt-0.5">{user.role}</span>
+                </div>
+                <button 
+                  onClick={onLogout}
+                  className="text-[9.5px] font-mono text-gray-500 hover:text-rose-400 pl-1.5 border-l border-white/10 hover:underline transition-colors cursor-pointer"
+                >
+                  Sortir
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={onOpenLogin}
+                className="flex items-center gap-1.5 text-[10px] sm:text-xs text-slate-200 bg-white/5 border border-white/10 hover:bg-white/15 px-3 h-11 rounded-xl transition-all cursor-pointer font-medium"
+              >
+                <LogIn className="w-3.5 h-3.5 text-slate-300" />
+                <span className="hidden xs:inline">Connexion</span>
+              </button>
             )}
 
             {/* Main Menu Button */}
@@ -260,11 +354,11 @@ END:VCALENDAR`;
           </div>
         </header>
 
-        {/* Core Detail Banner Screen */}
+        {/* Core Detail Banner Screen - Image is 100% clear with zero dark overlays */}
         <div 
           className="relative flex-1 w-full flex flex-col justify-center items-center md:items-start p-6 md:p-12"
           style={{
-            backgroundImage: `radial-gradient(circle at top left, rgba(16, 17, 24, 0.45) 0%, rgba(12, 13, 16, 0.99) 100%), url(${bgImg})`,
+            backgroundImage: `url(${bgImg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -274,14 +368,25 @@ END:VCALENDAR`;
             
 
 
-            {/* Giant Title of City */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-medium tracking-tight text-white mb-2 leading-none uppercase select-none text-center md:text-left">
-              SALON SPORTIX {currentDestination.name}
-            </h1>
+            {/* Giant 3-Line Falling Title of Salon -> Sportix Logo -> City */}
+            <div className="flex flex-col items-center md:items-start select-none text-center md:text-left space-y-2 mb-4">
+              <span className="text-xl sm:text-2xl font-mono tracking-[0.45em] text-[#f26d21] uppercase font-black pl-[0.45em]">
+                SALON
+              </span>
+              
+              {/* Sportix Logo with zero subtitle (zero-gap and custom orange "i") */}
+              <div className="transform scale-110 sm:scale-125 origin-center md:origin-left py-1">
+                <SportixLogo showSubtitle={false} />
+              </div>
+
+              <span className="text-4xl sm:text-5xl md:text-6xl font-display tracking-widest text-white uppercase font-black drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] leading-none mt-2">
+                {currentDestination.name}
+              </span>
+            </div>
 
             {/* Date subtitle */}
-            <p className="text-base md:text-lg font-display text-gray-400 tracking-wider font-light uppercase select-none text-center md:text-left">
-              {currentDestination.dateText}
+            <p className="text-base md:text-lg font-display text-white tracking-widest font-black uppercase select-none text-center md:text-left bg-black/40 border border-white/20 px-4 py-1.5 rounded-lg shadow-lg backdrop-blur-sm">
+              📅 {currentDestination.dateText}
             </p>
 
             {/* Countdown metrics */}
@@ -345,7 +450,7 @@ END:VCALENDAR`;
                 </span>
               </div>
               <p className="text-[9px] font-mono text-gray-500 mt-1">
-                Mise à jour en continu sans interruption • Réseau Sportix Salon
+                Mise à jour en continu sans interruption • Réseau Salon Sportix
               </p>
             </div>
 
@@ -359,7 +464,7 @@ END:VCALENDAR`;
                     <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-1.5">
                       {currentDestination.phones.map((phone, idx) => (
                         <div key={idx} className="flex items-center gap-1.5 font-mono text-sm animate-fade-in">
-                          <span className="w-1 h-1 rounded-full bg-amber-500" />
+                           <span className="w-1 h-1 rounded-full bg-amber-500" />
                           <a href={`tel:${phone.replace(/\s+/g, '')}`} className="font-bold text-slate-100 hover:text-amber-400 transition-colors">
                             {phone}
                           </a>
@@ -370,23 +475,19 @@ END:VCALENDAR`;
                 </div>
               )}
 
-              {/* Collaborators Panel inside the Direct Info area */}
-              <div className="w-full bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2.5">
-                <div className="text-left">
-                  <span className="text-[9px] font-mono text-[#d4af37] tracking-[0.2em] uppercase block">ESPACE COLLABORATEURS</span>
-                  <p className="text-[10px] font-bold text-gray-300">Partenaires Officiels de Liaison :</p>
-                </div>
-                
-                <div className="flex flex-wrap items-center gap-4.5 mt-1">
-                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900 border border-white/5 rounded p-1 flex items-center justify-center">
+              {/* Collaborators Panel inside the Direct Info area (No forbidden labels style) */}
+              <div className="w-full bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2 relative">
+                <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest leading-none">Partenaires</p>
+                <div className="flex flex-wrap items-center gap-4.5 mt-1.5">
+                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center">
                     <InsideSportsLogo className="h-6" />
                   </div>
                   <div className="w-px h-5 bg-white/10" />
-                  <div className="hover:scale-105 transition-transform duration-300 w-[60px] flex items-center justify-center bg-neutral-900 border border-white/5 rounded p-1">
+                  <div className="hover:scale-105 transition-transform duration-300 w-[60px] flex items-center justify-center bg-neutral-900/60 border border-white/5 rounded p-1">
                     <FelinLogo className="h-4.5" />
                   </div>
                   <div className="w-px h-5 bg-white/10" />
-                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900 border border-white/5 rounded p-1 flex items-center justify-center">
+                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center">
                     <SportThequeLogo className="h-6" />
                   </div>
                 </div>
@@ -425,6 +526,8 @@ END:VCALENDAR`;
               </motion.button>
             </div>
           </main>
+
+
         </div>
       </section>
 
@@ -450,7 +553,7 @@ END:VCALENDAR`;
               {/* Top Drawer Controls */}
               <div>
                 <div className="flex justify-between items-center mb-10">
-                  <SportixLogo className="scale-90" showSubtitle={false} />
+                  <SportixLogo className="scale-90" showSubtitle={true} placeName={currentDestination.name} />
                   <button 
                     onClick={() => setIsMenuOpen(false)}
                     className="p-1 rounded-full text-gray-400 hover:text-white hover:bg-white/5 transition-all"
@@ -499,7 +602,7 @@ END:VCALENDAR`;
                   </ul>
 
                   <p className="text-xs text-gray-500 leading-relaxed font-light mt-6">
-                    Sportix Salon est le premier roadshow d'affaires du sport en Afrique, connectant technologies, infrastructures innovantes, sport-business et décideurs étatiques.
+                    Salon Sportix est le premier roadshow d'affaires du sport en Afrique, connectant technologies, infrastructures innovantes, sport-business et décideurs étatiques.
                   </p>
                 </div>
               </div>
@@ -508,7 +611,7 @@ END:VCALENDAR`;
               <div className="space-y-4">
                 <div className="rounded-xl bg-[#13141b] border border-white/5 p-4 text-xs space-y-2">
                   <span className="font-mono text-[9px] text-[#d4af37] uppercase tracking-wider block">CONTACT GENERAL</span>
-                  <p className="text-gray-300">📧 salon-sportix@yahoo.com</p>
+                  <p className="text-gray-300">📧 mountain_consultating@yahoo.fr</p>
                   <p className="text-gray-300">📞 +237 600 000 000</p>
                 </div>
 

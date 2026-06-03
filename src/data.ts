@@ -8,7 +8,7 @@ export const DESTINATIONS: Destination[] = [
     dateText: '24 - 26 SEPTEMBRE 2026',
     // Set to 24th September 24-26, 2026
     targetDate: new Date('2026-09-24T09:00:00'),
-    description: "Le premier rendez-vous de l'innovation sportive en Afrique Centrale. Le Sportix Salon Douala réunira les leaders d'opinion, les marques emblématiques, les start-ups technologiques et les décideurs institutionnels pour structurer l'avenir de notre salon-écosystème.",
+    description: "Le premier rendez-vous de l'innovation sportive en Afrique Centrale. Le Salon Sportix Douala réunira les leaders d'opinion, les marques emblématiques, les start-ups technologiques et les décideurs institutionnels pour structurer l'avenir de notre salon-écosystème.",
     phones: ['+237 694 88 50 86', '+237 654 15 24 99'],
     reachedCount: 4850,
     infoCards: [
