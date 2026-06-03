@@ -4,7 +4,7 @@ import { MapPin, Trophy, Play, Pause, Compass, HelpCircle, LogIn, Users, Globe, 
 import SportixLogo from './SportixLogo';
 import { Destination, User } from '../types';
 import { DESTINATIONS } from '../data';
-import bgImg from '../assets/images/sportix_studio_inclusive_vip_1780486973993.png';
+import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 

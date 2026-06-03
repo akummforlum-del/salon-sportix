@@ -40,7 +40,7 @@ const renderMessageContent = (content: string, isAssistant: boolean) => {
     if (isBullet) {
       return (
         <div key={lineIdx} className="flex items-start gap-1.5 ml-1 my-1">
-          <span className={isAssistant ? "text-rose-400 mt-1 shrink-0" : "text-white mt-1 shrink-0"}>•</span>
+          <span className={isAssistant ? "text-[#f26d21] mt-1 shrink-0" : "text-white mt-1 shrink-0"}>•</span>
           <span>{formattedText}</span>
         </div>
       );
@@ -138,7 +138,7 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
             {/* Drawer Header */}
             <header className="p-5 border-b border-white/5 bg-black/20 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
+                <div className="w-9 h-9 rounded-xl bg-[#f26d21]/10 border border-[#f26d21]/20 flex items-center justify-center text-[#f26d21]">
                   <Sparkles className="w-4 h-4 animate-pulse" />
                 </div>
                 <div>
@@ -188,7 +188,7 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
                       className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${
                         isAssistant
                           ? 'bg-[#151620] border border-white/5 text-gray-300 rounded-tl-sm'
-                          : 'bg-rose-500 text-white rounded-tr-sm font-medium shadow-md shadow-rose-950/20'
+                          : 'bg-[#f26d21] text-white rounded-tr-sm font-medium shadow-md shadow-orange-950/20'
                       }`}
                     >
                       {/* Rich styled renderer for lists and bold tags */}
@@ -204,7 +204,7 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-[#151620] border border-white/5 text-gray-400 rounded-2xl rounded-tl-sm px-4 py-3.5 flex items-center gap-2 text-xs">
-                    <Loader2 className="w-4 h-4 animate-spin text-rose-500" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#f26d21]" />
                     <span>L'IA analyse le salon...</span>
                   </div>
                 </div>
@@ -220,7 +220,7 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
                     key={index}
                     onClick={() => handleSendMessage(s)}
                     disabled={isLoading}
-                    className="text-[10px] text-left text-gray-400 hover:text-white border border-white/5 hover:border-rose-500/20 bg-black/30 hover:bg-rose-500/5 rounded-lg py-1.5 px-3.5 transition-all cursor-pointer disabled:opacity-40"
+                    className="text-[10px] text-left text-gray-400 hover:text-white border border-white/5 hover:border-[#f26d21]/20 bg-black/30 hover:bg-[#f26d21]/5 rounded-lg py-1.5 px-3.5 transition-all cursor-pointer disabled:opacity-40"
                   >
                     {s}
                   </button>
@@ -242,13 +242,13 @@ export default function AiHelpWidget({ isOpen, onClose }: AiHelpWidgetProps) {
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="Posez votre question sur Sportix..."
-                  className="flex-1 bg-[#090a0d] border border-white/10 focus:border-rose-500/50 rounded-xl py-3 px-4 text-xs text-white placeholder-gray-600 focus:outline-none focus:ring-0 transition-all"
+                  className="flex-1 bg-[#090a0d] border border-white/10 focus:border-[#f26d21]/50 rounded-xl py-3 px-4 text-xs text-white placeholder-gray-600 focus:outline-none focus:ring-0 transition-all"
                   disabled={isLoading}
                 />
                 <button
                   type="submit"
                   disabled={!inputText.trim() || isLoading}
-                  className="bg-white hover:bg-rose-100 disabled:opacity-40 text-black rounded-xl w-11 h-11 flex items-center justify-center transition-all cursor-pointer active:scale-95 shrink-0"
+                  className="bg-white hover:bg-orange-50 disabled:opacity-40 text-black rounded-xl w-11 h-11 flex items-center justify-center transition-all cursor-pointer active:scale-95 shrink-0"
                 >
                   <Send className="w-4 h-4" />
                 </button>

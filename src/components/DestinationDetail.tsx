@@ -7,7 +7,7 @@ import { Destination, User } from '../types';
 import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
-import bgImg from '../assets/images/sportix_studio_inclusive_vip_1780486973993.png';
+import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 

@@ -158,7 +158,7 @@ export default function App() {
         transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-rose-500 hover:bg-rose-400 text-white font-medium py-3 px-4.5 rounded-full shadow-lg shadow-rose-950/40 cursor-pointer border border-rose-400/20 active:scale-95 group transition-colors select-none"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-[#f26d21] hover:bg-[#e15c10] text-white font-medium py-3 px-4.5 rounded-full shadow-lg shadow-orange-950/40 cursor-pointer border border-[#f26d21]/20 active:scale-95 group transition-colors select-none"
         title="Guide IA Sportix"
       >
         <div className="relative">
