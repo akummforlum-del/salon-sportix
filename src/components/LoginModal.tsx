@@ -178,11 +178,11 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleQuickFill('mountain_consultating@yahoo.fr', 'mountain123')}
+                  onClick={() => handleQuickFill('mountain_consulting@yahoo.fr', 'mountain123')}
                   className="p-2 text-left text-gray-300 hover:text-white border border-white/5 hover:border-amber-500/30 bg-black/30 hover:bg-amber-550/5 rounded-lg transition-all text-xs"
                 >
                   <p className="font-bold text-[#f26d21]">Mountain</p>
-                  <p className="text-[9px] text-gray-500">mountain_consultating@yahoo.fr</p>
+                  <p className="text-[9px] text-gray-500">mountain_consulting@yahoo.fr</p>
                 </button>
                 <button
                   type="button"

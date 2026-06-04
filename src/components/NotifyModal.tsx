@@ -72,8 +72,10 @@ export default function NotifyModal({ isOpen, onClose, destination }: NotifyModa
                     <h3 className="font-display text-base font-semibold text-white uppercase tracking-tight">
                       S'abonner aux alertes
                     </h3>
-                    <p className="text-xs text-gray-400">
-                      Salon Destination : <span className="font-semibold text-rose-400">{destination.name}</span>
+                    <p className="text-xs">
+                      <span className="font-black text-rose-500 uppercase tracking-widest text-[10.5px] font-mono">
+                        salon sportix {destination.name}
+                      </span>
                     </p>
                   </div>
                 </div>

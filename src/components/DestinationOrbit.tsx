@@ -4,7 +4,7 @@ import { MapPin, Trophy, Play, Pause, Compass, HelpCircle, LogIn, Users, Globe, 
 import SportixLogo from './SportixLogo';
 import { Destination, User } from '../types';
 import { DESTINATIONS } from '../data';
-import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
+import bgImg from '../assets/images/diverse_stadium_suite_1780564197298.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 
@@ -293,8 +293,8 @@ export default function DestinationOrbit({
             {/* General Consulting Email */}
             <div className="flex items-center gap-1.5 bg-rose-500/10 border border-rose-500/20 px-3 py-1.5 rounded-lg" title="Email">
               <Mail className="w-3.5 h-3.5 text-rose-450" />
-              <a href="mailto:mountain_consultating@yahoo.fr" className="font-mono text-[10px] text-white hover:text-rose-450 transition-colors font-semibold">
-                mountain_consultating@yahoo.fr
+              <a href="mailto:mountain_consulting@yahoo.fr" className="font-mono text-[10px] text-white hover:text-rose-450 transition-colors font-semibold">
+                mountain_consulting@yahoo.fr
               </a>
             </div>
           </div>

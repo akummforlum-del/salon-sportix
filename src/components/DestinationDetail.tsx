@@ -7,7 +7,7 @@ import { Destination, User } from '../types';
 import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
-import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
+import bgImg from '../assets/images/diverse_stadium_suite_1780564197298.png';
 import exactPeopleImg from '../assets/images/sportix_exact_people_1780550707928.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
@@ -42,6 +42,31 @@ export default function DestinationDetail({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const [selectedRequest, setSelectedRequest] = useState<'visiteur' | 'exposant' | 'sponsor' | 'media'>('visiteur');
+
+  const getWhatsappLink = (phone: string, requestType: 'visiteur' | 'exposant' | 'sponsor' | 'media') => {
+    const rawNumber = phone.replace(/[^\d]/g, '');
+    let text = '';
+    
+    switch (requestType) {
+      case 'exposant':
+        text = `Bonjour Salon Sportix, je vous écris depuis la plateforme web. Je m'intéresse au Salon Sportix de ${currentDestination.name} et je souhaite obtenir des informations pour réserver un stand (Exposant). Merci de m'envoyer les modalités !`;
+        break;
+      case 'sponsor':
+        text = `Bonjour Salon Sportix, je vous écris suite à ma visite sur le site web. Je suis intéressé(e) par les opportunités de partenariat et sponsoring pour le Salon Sportix de ${currentDestination.name}. J'aimerais recevoir votre dossier de sponsoring.`;
+        break;
+      case 'media':
+        text = `Bonjour Salon Sportix, je vous contacte depuis le site internet. Je souhaite formuler une demande d'accréditation média / presse pour couvrir le Salon Sportix de ${currentDestination.name}.`;
+        break;
+      case 'visiteur':
+      default:
+        text = `Bonjour Salon Sportix, je viens de visiter votre site internet concernant le Salon Sportix de ${currentDestination.name}. Je souhaiterais avoir plus d'informations générales sur l'événement en tant que visiteur.`;
+        break;
+    }
+    
+    return `https://wa.me/${rawNumber}?text=${encodeURIComponent(text)}`;
+  };
 
   // Cumulative live counter ticking up continuously in real-time
   const [cumulativeInscriptions, setCumulativeInscriptions] = useState(0);
@@ -390,12 +415,21 @@ END:VCALENDAR`;
                         {currentDestination.name}
                       </div>
                       
-                      <div className="py-2.5 flex flex-col items-center">
-                        <div className="text-2xl sm:text-3xl font-extrabold text-white leading-none font-display tracking-tight">
-                          DU <span className="text-white">24</span> AU <span className="text-white">26</span>
-                        </div>
-                        <div className="text-xs sm:text-sm font-black text-white tracking-widest uppercase mt-1">
-                          SEPTEMBRE 2026
+                      <div className="py-2.5 px-3 w-full bg-white/5 rounded-2xl border border-white/10 flex flex-col items-center justify-center space-y-1.5 mt-1">
+                        <span className="text-[9px] font-mono tracking-widest text-emerald-400 font-black uppercase">CLIQUEZ POUR CHATTER WHATSAPP</span>
+                        <div className="flex flex-col items-center gap-1 w-full">
+                          {currentDestination.phones.map((phone, idx) => (
+                            <a 
+                              key={idx}
+                              href={getWhatsappLink(phone, selectedRequest)}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="w-full flex items-center justify-center gap-1 py-1 px-2.5 bg-emerald-500/15 border border-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 font-bold font-mono text-[10.5px] rounded-xl transition-all cursor-pointer"
+                            >
+                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                              {phone}
+                            </a>
+                          ))}
                         </div>
                       </div>
                       
@@ -431,31 +465,17 @@ END:VCALENDAR`;
                 {/* RIGHT COLUMN: ACTION & DATA CONTROLS */}
                 <div className="lg:col-span-7 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
                   {/* Titles */}
-                  <div className="space-y-3 flex flex-col items-center lg:items-start select-none">
-                    {/* "SALON" */}
-                    <div className="text-4xl sm:text-5xl font-black tracking-tight text-white font-display leading-none">
-                      SALON
-                    </div>
-                    
-                    {/* "Sportix" Logo */}
-                    <div className="transform scale-90 sm:scale-100 origin-center lg:origin-left py-1">
-                      <SportixLogo showSubtitle={false} />
-                    </div>
-
-                    {/* Name of the place (city) and subtext */}
-                    <div className="flex flex-col items-center lg:items-start">
-                      <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight drop-shadow-md">
+                  <div className="flex flex-col items-center lg:items-start select-none">
+                    <span className="text-[10px] font-mono tracking-widest text-[#f26d21] uppercase font-black">ROADSHOW D'ÉLITE EN AFRIQUE</span>
+                    <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col lg:flex-row lg:items-baseline gap-x-2.5 gap-y-1 mt-1">
+                      <span>SALON SPORTIX</span>
+                      <span className="text-rose-450 uppercase">
                         {currentDestination.name}
-                      </h1>
-                      <span className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
-                        {currentDestination.subtext}
                       </span>
-                    </div>
-
-                    {/* Bold Date in prominent display style so it is easily seen (White color) */}
-                    <div className="text-xl sm:text-2xl font-display font-black text-white tracking-wide uppercase drop-shadow-md py-1 border-t border-b border-white/5 w-full lg:w-auto text-center lg:text-left">
-                      🗓️ {currentDestination.dateText}
-                    </div>
+                    </h1>
+                    <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
+                      📍 {currentDestination.subtext}
+                    </p>
                   </div>
 
                   {/* Countdown Metrics Row */}
@@ -522,17 +542,57 @@ END:VCALENDAR`;
                     </div>
                   </div>
 
+                  {/* Segmented control for user request */}
+                  <div className="w-full max-w-md bg-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-4 text-left select-none space-y-3.5">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-3.5 h-3.5 text-[#f26d21] animate-pulse" />
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300 font-bold">Sélectionnez l'objet de votre contact :</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {(['visiteur', 'exposant', 'sponsor', 'media'] as const).map((type) => {
+                        const labels: Record<string, string> = {
+                          visiteur: '🎟️ Accès Visiteur',
+                          exposant: '🎪 Réserver un Stand',
+                          sponsor: '✨ Devenir Sponsor',
+                          media: '🎤 Médias & Presse'
+                        };
+                        const isActive = selectedRequest === type;
+                        return (
+                          <button
+                            key={type}
+                            onClick={() => setSelectedRequest(type)}
+                            type="button"
+                            className={`py-2 px-3 rounded-xl text-[10.5px] font-semibold text-left transition-all flex items-center justify-between border cursor-pointer ${
+                              isActive 
+                                ? 'bg-amber-500/15 border-amber-500/40 text-amber-400 font-bold' 
+                                : 'bg-white/5 border-white/5 text-gray-400 hover:text-white hover:border-white/10'
+                            }`}
+                          >
+                            <span>{labels[type]}</span>
+                            {isActive && <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
                   {/* Direct Information Details & Phone numbers */}
                   {currentDestination.phones && currentDestination.phones.length > 0 && (
-                    <div className="w-full max-w-md flex items-start gap-3 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 text-left">
-                      <Phone className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
+                    <div className="w-full max-w-md flex items-start gap-3 bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 text-left">
+                      <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
                       <div>
-                        <h4 className="text-[9px] font-mono uppercase text-amber-500 tracking-wider">Secrétariat & Liaison Directe</h4>
-                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                        <h4 className="text-[9px] font-mono uppercase text-emerald-400 tracking-wider">Secrétariat & Liaison WhatsApp</h4>
+                        <p className="text-[10.5px] text-gray-400 mt-0.5">Cliquez pour ouvrir un chat pré-rempli correspondant à votre choix.</p>
+                        <div className="flex flex-col gap-1.5 mt-2">
                           {currentDestination.phones.map((phone, idx) => (
                             <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
-                              <span className="w-1 h-1 rounded-full bg-amber-500" />
-                              <a href={`tel:${phone.replace(/\s+/g, '')}`} className="font-bold text-slate-100 hover:text-amber-400 transition-colors">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                              <a 
+                                href={getWhatsappLink(phone, selectedRequest)} 
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-bold text-slate-100 hover:text-emerald-400 transition-colors cursor-pointer"
+                              >
                                 {phone}
                               </a>
                             </div>
@@ -541,24 +601,6 @@ END:VCALENDAR`;
                       </div>
                     </div>
                   )}
-
-                  {/* Sponsors Panel */}
-                  <div className="w-full max-w-md bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2 relative text-left">
-                    <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest leading-none">Partenaires</p>
-                    <div className="flex flex-wrap items-center gap-4 mt-1">
-                      <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
-                        <InsideSportsLogo className="h-5" />
-                      </div>
-                      <div className="w-px h-5 bg-white/10" />
-                      <div className="hover:scale-105 transition-transform duration-300 flex items-center justify-center bg-neutral-900/60 border border-white/5 rounded p-1 h-8 px-2">
-                        <FelinLogo className="h-4" />
-                      </div>
-                      <div className="w-px h-5 bg-white/10" />
-                      <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
-                        <SportThequeLogo className="h-5" />
-                      </div>
-                    </div>
-                  </div>
 
                   {/* Action Buttons row */}
                   <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
@@ -597,31 +639,17 @@ END:VCALENDAR`;
             ) : (
               <div className="space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
                 {/* Titles */}
-                <div className="space-y-3 flex flex-col items-center lg:items-start select-none">
-                  {/* "SALON" */}
-                  <div className="text-4xl sm:text-5xl font-black tracking-tight text-white font-display leading-none">
-                    SALON
-                  </div>
-                  
-                  {/* "Sportix" Logo */}
-                  <div className="transform scale-90 sm:scale-100 origin-center lg:origin-left py-1">
-                    <SportixLogo showSubtitle={false} />
-                  </div>
-
-                  {/* Name of the place (city) and subtext */}
-                  <div className="flex flex-col items-center lg:items-start">
-                    <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight drop-shadow-md">
+                <div className="flex flex-col items-center lg:items-start select-none">
+                  <span className="text-[10px] font-mono tracking-widest text-[#f26d21] uppercase font-black">ROADSHOW D'ÉLITE EN AFRIQUE</span>
+                  <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col lg:flex-row lg:items-baseline gap-x-2.5 gap-y-1 mt-1">
+                    <span>SALON SPORTIX</span>
+                    <span className="text-rose-450 uppercase">
                       {currentDestination.name}
-                    </h1>
-                    <span className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
-                      {currentDestination.subtext}
                     </span>
-                  </div>
-
-                  {/* Bold Date in prominent display style so it is easily seen (White color) */}
-                  <div className="text-xl sm:text-2xl font-display font-black text-white tracking-wide uppercase drop-shadow-md py-1 border-t border-b border-white/5 w-full lg:w-auto text-center lg:text-left">
-                    🗓️ {currentDestination.dateText}
-                  </div>
+                  </h1>
+                  <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
+                    📍 {currentDestination.subtext}
+                  </p>
                 </div>
 
                 {/* Countdown Metrics Row */}
@@ -688,17 +716,57 @@ END:VCALENDAR`;
                   </div>
                 </div>
 
+                {/* Segmented control for user request */}
+                <div className="w-full max-w-md bg-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-4 text-left select-none space-y-3.5">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#f26d21] animate-pulse" />
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300 font-bold">Sélectionnez l'objet de votre contact :</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(['visiteur', 'exposant', 'sponsor', 'media'] as const).map((type) => {
+                      const labels: Record<string, string> = {
+                        visiteur: '🎟️ Accès Visiteur',
+                        exposant: '🎪 Réserver un Stand',
+                        sponsor: '✨ Devenir Sponsor',
+                        media: '🎤 Médias & Presse'
+                      };
+                      const isActive = selectedRequest === type;
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => setSelectedRequest(type)}
+                          type="button"
+                          className={`py-2 px-3 rounded-xl text-[10.5px] font-semibold text-left transition-all flex items-center justify-between border cursor-pointer ${
+                            isActive 
+                              ? 'bg-amber-500/15 border-amber-500/40 text-amber-400 font-bold' 
+                              : 'bg-white/5 border-white/5 text-gray-400 hover:text-white hover:border-white/10'
+                          }`}
+                        >
+                          <span>{labels[type]}</span>
+                          {isActive && <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 {/* Direct Information Details & Phone numbers */}
                 {currentDestination.phones && currentDestination.phones.length > 0 && (
-                  <div className="w-full max-w-md flex items-start gap-3 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 text-left">
-                    <Phone className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
+                  <div className="w-full max-w-md flex items-start gap-3 bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 text-left">
+                    <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
                     <div>
-                      <h4 className="text-[9px] font-mono uppercase text-amber-500 tracking-wider">Secrétariat & Liaison Directe</h4>
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                      <h4 className="text-[9px] font-mono uppercase text-emerald-400 tracking-wider">Secrétariat & Liaison WhatsApp</h4>
+                      <p className="text-[10.5px] text-gray-400 mt-0.5">Cliquez pour ouvrir un chat pré-rempli correspondant à votre choix.</p>
+                      <div className="flex flex-col gap-1.5 mt-2">
                         {currentDestination.phones.map((phone, idx) => (
                           <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
-                            <span className="w-1 h-1 rounded-full bg-amber-500" />
-                            <a href={`tel:${phone.replace(/\s+/g, '')}`} className="font-bold text-slate-100 hover:text-amber-400 transition-colors">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                            <a 
+                              href={getWhatsappLink(phone, selectedRequest)} 
+                              target="_blank"
+                              rel="noreferrer"
+                              className="font-bold text-slate-100 hover:text-emerald-400 transition-colors cursor-pointer"
+                            >
                               {phone}
                             </a>
                           </div>
@@ -707,24 +775,6 @@ END:VCALENDAR`;
                     </div>
                   </div>
                 )}
-
-                {/* Sponsors Panel */}
-                <div className="w-full max-w-md bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2 relative text-left">
-                  <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest leading-none">Partenaires</p>
-                  <div className="flex flex-wrap items-center gap-4 mt-1">
-                    <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
-                      <InsideSportsLogo className="h-5" />
-                    </div>
-                    <div className="w-px h-5 bg-white/10" />
-                    <div className="hover:scale-105 transition-transform duration-300 flex items-center justify-center bg-neutral-900/60 border border-white/5 rounded p-1 h-8 px-2">
-                      <FelinLogo className="h-4" />
-                    </div>
-                    <div className="w-px h-5 bg-white/10" />
-                    <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
-                      <SportThequeLogo className="h-5" />
-                    </div>
-                  </div>
-                </div>
 
                 {/* Action Buttons row */}
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
@@ -845,7 +895,7 @@ END:VCALENDAR`;
               <div className="space-y-4">
                 <div className="rounded-xl bg-[#13141b] border border-white/5 p-4 text-xs space-y-2">
                   <span className="font-mono text-[9px] text-[#d4af37] uppercase tracking-wider block">CONTACT GENERAL</span>
-                  <p className="text-gray-300">📧 mountain_consultating@yahoo.fr</p>
+                  <p className="text-gray-300">📧 mountain_consulting@yahoo.fr</p>
                   <p className="text-gray-300">📞 +237 600 000 000</p>
                 </div>
 
