@@ -455,18 +455,20 @@ END:VCALENDAR`;
                 {/* Two Visual Cards (Viseul) just below Contour Time */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mt-2 px-1">
                   {/* Visual 1: Premium Blue Poster fitted perfectly inside */}
-                  <div className="w-full bg-[#232b85] rounded-[2.5rem] pt-6 sm:pt-8 pb-0 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col items-center justify-between min-h-[500px] sm:min-h-[560px] select-none">
-                    {/* Miniature Sportix Logo */}
-                    <div className="mb-2 transform scale-90">
-                      <SportixLogo showSubtitle={false} />
+                  <div className="w-full bg-[#20318A] rounded-[2.5rem] pb-0 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.35)] relative overflow-hidden flex flex-col items-center justify-between min-h-[500px] sm:min-h-[560px] select-none text-white">
+                    {/* Miniature Sportix Logo in its own isolated white banner to prevent touching the blue background */}
+                    <div className="w-full bg-white py-4 flex justify-center border-b border-slate-200/50 shadow-[0_4px_12px_rgba(0,0,0,0.08)] rounded-t-[2.2rem]">
+                      <div className="transform scale-90">
+                        <SportixLogo showSubtitle={false} />
+                      </div>
                     </div>
                     
-                    <div className="px-4 flex-1 flex flex-col items-center justify-center space-y-3.5">
+                    <div className="px-4 flex-1 flex flex-col items-center justify-center space-y-3.5 mt-5">
                       <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none font-display">
                         SALON
                       </h2>
                       
-                      <p className="text-[10px] sm:text-xs font-black text-white/95 tracking-normal uppercase max-w-[280px] leading-relaxed font-sans px-1 text-center font-display">
+                      <p className="text-[10px] sm:text-xs font-black text-slate-200 tracking-normal uppercase max-w-[280px] leading-relaxed font-sans px-1 text-center font-display">
                         {currentDestination.fullTitle}
                       </p>
                       
@@ -476,7 +478,7 @@ END:VCALENDAR`;
                       
                       <div className="bg-white/10 text-white text-xs sm:text-sm font-black tracking-normal px-4 py-2 rounded-2xl border border-white/10 shadow-md flex items-center gap-2 mt-0.5">
                         <span>🗓️</span>
-                        <span>Du 24-26 septembre 2026</span>
+                        <span>{currentDestination.dateText}</span>
                       </div>
                       
                       <div className="bg-[#f26d21] text-white text-[9px] font-bold uppercase py-0.5 px-3.5 rounded mt-1.5 inline-block font-sans">
@@ -496,11 +498,11 @@ END:VCALENDAR`;
                         className="w-full h-auto object-cover transform translate-y-1 scale-105 animate-fade-in"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-x-0 bottom-0 h-4 bg-gradient-to-t from-[#232b85]/40 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 h-4 bg-gradient-to-t from-[#20318A]/40 to-transparent" />
                     </div>
 
                     {/* Integrated WhatsApp numbers section below the image */}
-                    <div className="py-3.5 px-5 w-full bg-black/30 border-t border-b border-white/5 flex flex-col items-center justify-center space-y-1.5 z-10 relative">
+                    <div className="py-3.5 px-5 w-full bg-black/20 border-t border-b border-white/10 flex flex-col items-center justify-center space-y-1.5 z-10 relative">
                       <span className="text-[9px] font-mono tracking-widest text-[#22c55e] font-extrabold uppercase">CLIQUEZ POUR CHATTER WHATSAPP</span>
                       <div className="flex flex-col items-center gap-1.5 w-full">
                         {currentDestination.phones.map((phone, idx) => (
@@ -552,12 +554,12 @@ END:VCALENDAR`;
 
                     {/* Logo Section */}
                     <div className="pt-6 sm:pt-7 w-full flex items-center justify-center z-10 transition-transform group-hover/v2:scale-102 duration-300">
-                      <SportixLogo showSubtitle={false} />
+                      <SportixLogo showSubtitle={false} variant="light" />
                     </div>
 
                     {/* Header Title Match */}
                     <div className="px-5 mt-2.5 z-10">
-                      <h3 className="text-xs sm:text-[14px]/tight font-sans font-black tracking-tight text-[#232b85] uppercase">
+                      <h3 className="text-xs sm:text-[14px]/tight font-sans font-black tracking-tight text-[#20318A] uppercase">
                         SALON DES MÉTIERS, ACTEURS ET<br />
                         <span className="text-[#f26d21]">PROFESSIONNELS DU SPORT</span>
                       </h3>
@@ -674,7 +676,7 @@ END:VCALENDAR`;
                     </div>
 
                     {/* Bottom Branded Contact & Web bar */}
-                    <div className="w-full bg-[#232b85] py-2.5 px-4 flex items-center justify-between text-white text-[9px] font-mono border-t border-slate-200/5 z-10">
+                    <div className="w-full bg-[#20318A] py-2.5 px-4 flex items-center justify-between text-white text-[9px] font-mono border-t border-slate-200/5 z-10">
                       <a href="https://www.salon-sportix.com" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-orange-400 transition-colors">
                         <Globe className="w-3 text-orange-400" />
                         <span>www.salon-sportix.com</span>
@@ -691,7 +693,7 @@ END:VCALENDAR`;
                     {/* Futuristic Glass & Luminous Overlay Filter for Visual 2 */}
                     <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/0 via-white/10 to-white/0 mix-blend-overlay opacity-60 z-20 transition-all duration-700 group-hover/v2:rotate-12 group-hover/v2:scale-150" />
                     <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-500/5 via-transparent to-transparent mix-blend-color-dodge z-10" />
-                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#232b85]/5 via-transparent to-transparent mix-blend-plus-lighter z-10" />
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#20318A]/5 via-transparent to-transparent mix-blend-plus-lighter z-10" />
                     <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.03)_50%)] bg-[size:100%_4px] opacity-10 z-10" />
                   </div>
                 </div>
@@ -790,13 +792,15 @@ END:VCALENDAR`;
               <div className="space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
                 {/* Titles */}
                 <div className="flex flex-col items-center lg:items-start select-none">
-                  <span className="text-[10px] font-mono tracking-widest text-[#f26d21] uppercase font-black">ROADSHOW D'ÉLITE EN AFRIQUE</span>
                   <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col lg:flex-row lg:items-baseline gap-x-2.5 gap-y-1 mt-1">
                     <span>SALON SPORTIX</span>
                     <span className="text-rose-450 uppercase">
                       {currentDestination.name}
                     </span>
                   </h1>
+                  <p className="text-sm font-sans font-black text-white uppercase tracking-wider mt-2.5">
+                    📅 {currentDestination.dateText}
+                  </p>
                   <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
                     📍 {currentDestination.subtext}
                   </p>

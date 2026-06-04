@@ -4,40 +4,38 @@ interface SportixLogoProps {
   className?: string;
   showSubtitle?: boolean;
   placeName?: string;
+  variant?: 'dark' | 'light';
 }
 
-export default function SportixLogo({ className = '', showSubtitle = true, placeName }: SportixLogoProps) {
+export default function SportixLogo({ className = '', showSubtitle = true, placeName, variant = 'dark' }: SportixLogoProps) {
+  // Always use the high-fidelity brand blue color (#20318A) from the official Sportix logo
+  const textColor = '#20318A';
+  
   return (
     <div className={`flex flex-col items-center justify-center select-none text-center ${className}`}>
-      {/* Dynamic transparent high-contrast presentation: Clean vector wordmark with thick white outline & high-opacity drop shadow */}
-      <div className="flex items-center justify-center filter drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] transition-all hover:scale-102 duration-300">
+      {/* Dynamic transparent high-contrast presentation: Clean vector wordmark matching the brand logo-sportix perfectly */}
+      <div className="flex items-center justify-center transition-all hover:scale-102 duration-300">
         <svg
           viewBox="0 0 150 58"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="h-10 sm:h-12 w-auto"
         >
-          {/* Slanted brush-stroke 'S' outline matching the logo-sportix image perfectly (with clear white stroke) */}
+          {/* Slanted brush-stroke 'S' outline: sharp, dynamic, and lightning-bolt-like matching the brand logo-sportix perfectly */}
           <path
-            d="M 68 2 C 45 17, 10 34, 6 44 C 3.5 50, 14 45, 28 42 C 44 38.5, 54 37.5, 55.5 42 C 57 47, 44 57, 32 67 L 0 100 C 12 88, 38 68, 48 64 C 55 61, 56.5 50, 48 45 C 38 40.5, 20 42.5, 12 43.5 C 24 35, 50 19, 68 2 Z"
-            fill="#f26d21"
-            stroke="#ffffff"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
-            transform="translate(4, -2) scale(0.56)"
+            d="M 33 2 C 24 8, 11 16, 5 24 C 1 29, 7 31, 15 30 C 23 29, 30 33, 28 38 C 25 44, 13 51, 2 57 C 9 50, 23 43, 24 36 C 25 31, 17 31, 9 32 C 3 33, 9 21, 17 15 C 23 10, 29 6, 33 2 Z"
+            fill="#F16E22"
+            transform="translate(21, 0) scale(0.95)"
           />
           
-          {/* Letters "port" in matching italic bold style with absolute spacing and protective white outlines */}
+          {/* Letters "port" in matching italic bold style with absolute spacing */}
           <text
             y="42"
-            fill="#232b85"
+            fill={textColor}
             fontFamily="'Inter', 'Arial Black', system-ui, -apple-system, sans-serif"
             fontWeight="950"
             fontSize="36"
             fontStyle="italic"
-            stroke="#ffffff"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
             className="font-black"
           >
             <tspan x="42">p</tspan>
@@ -46,36 +44,28 @@ export default function SportixLogo({ className = '', showSubtitle = true, place
             <tspan x="92">t</tspan>
           </text>
 
-          {/* Precision custom slanted stem 'i' in blue to match the "port" style exactly */}
+          {/* Precision custom slanted stem 'i' to match the "port" style exactly */}
           <path
             d="M 106 42 L 111.5 17 L 119.5 17 L 114 42 Z"
-            fill="#232b85"
-            stroke="#ffffff"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
+            fill={textColor}
           />
 
-          {/* Custom high-contrast orange dot exactly above the blue stem */}
+          {/* Custom high-contrast orange dot exactly above the stem */}
           <circle 
             cx="115.5" 
             cy="10" 
             r="4.5" 
             fill="#f26d21" 
-            stroke="#ffffff"
-            strokeWidth="0.8"
           />
 
-          {/* Letter "x" completing the brand wordmark with absolute tracking (placed snuggly closer to current i) */}
+          {/* Letter "x" completing the brand wordmark with absolute tracking */}
           <text
             y="42"
-            fill="#232b85"
+            fill={textColor}
             fontFamily="'Inter', 'Arial Black', system-ui, -apple-system, sans-serif"
             fontWeight="950"
             fontSize="36"
             fontStyle="italic"
-            stroke="#ffffff"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
             className="font-black"
           >
             <tspan x="114">x</tspan>
