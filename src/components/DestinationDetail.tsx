@@ -201,15 +201,15 @@ END:VCALENDAR`;
                 {isSelected && (
                   <motion.div 
                     layoutId="activePill"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-rose-500 rounded-r-full"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#f26d21] rounded-r-full"
                   />
                 )}
 
                 {/* Circular indicator light */}
                 <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 transition-all ${
-                  isSelected ? 'border-rose-400' : 'border-gray-600 group-hover:border-gray-400'
+                  isSelected ? 'border-[#f26d21]' : 'border-gray-600 group-hover:border-gray-400'
                 }`}>
-                  {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />}
+                  {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#f26d21]" />}
                 </div>
 
                 {/* City Information */}
@@ -269,7 +269,7 @@ END:VCALENDAR`;
             className="group flex items-center justify-center w-11 h-11 rounded-xl bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-colors cursor-pointer"
             title="Retour à la constellation"
           >
-            <ChevronLeft className="w-5 h-5 group-hover:text-rose-400 transition-colors" />
+            <ChevronLeft className="w-5 h-5 group-hover:text-[#f26d21] transition-colors" />
           </motion.button>
 
           <div className="flex items-center gap-3">
@@ -305,9 +305,9 @@ END:VCALENDAR`;
                 onClick={onOpenAiHelp}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-4 h-11 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 transition-all text-xs font-semibold cursor-pointer select-none"
+                className="flex items-center gap-2 px-4 h-11 rounded-xl bg-[#f26d21]/15 border border-[#f26d21]/35 text-[#f26d21] hover:bg-[#f26d21]/25 transition-all text-xs font-semibold cursor-pointer select-none"
               >
-                <Sparkles className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
+                <Sparkles className="w-3.5 h-3.5 text-[#f26d21] animate-pulse" />
                 <span className="hidden sm:inline">Aide IA</span>
               </motion.button>
             )}
@@ -327,7 +327,7 @@ END:VCALENDAR`;
                 </div>
                 <button 
                   onClick={onLogout}
-                  className="text-[9.5px] font-mono text-gray-500 hover:text-rose-400 pl-1.5 border-l border-white/10 hover:underline transition-colors cursor-pointer"
+                  className="text-[9.5px] font-mono text-gray-500 hover:text-[#f26d21] pl-1.5 border-l border-white/10 hover:underline transition-colors cursor-pointer"
                 >
                   Sortir
                 </button>
@@ -364,166 +364,252 @@ END:VCALENDAR`;
           }}
         >
           {/* Inner Content Block */}
-          <main className="w-full max-w-4xl z-10 space-y-6 py-12 flex flex-col items-center md:items-start justify-center">
-            
-
-
-            {/* Giant 3-Line Falling Title of Salon -> Sportix Logo -> City */}
-            <div className="flex flex-col items-center md:items-start select-none text-center md:text-left space-y-2 mb-4">
-              <span className="text-xl sm:text-2xl font-mono tracking-[0.45em] text-[#f26d21] uppercase font-black pl-[0.45em]">
-                SALON
-              </span>
+          <main className="w-full max-w-6xl z-10 py-8 px-2 sm:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-11 items-center">
               
-              {/* Sportix Logo with zero subtitle (zero-gap and custom orange "i") */}
-              <div className="transform scale-110 sm:scale-125 origin-center md:origin-left py-1">
-                <SportixLogo showSubtitle={false} />
+              {/* LEFT COLUMN: THE DIGITAL EVENT FLIER / POSTER RECREATION */}
+              <div className="lg:col-span-5 flex items-center justify-center w-full">
+                {currentDestination.fullTitle ? (
+                  <div className="w-full max-w-sm bg-[#232b85] rounded-[2.5rem] p-6 sm:p-8 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col items-center justify-center animate-fade-in select-none">
+                    {/* Miniature Sportix Logo */}
+                    <div className="mb-4 transform scale-90">
+                      <SportixLogo showSubtitle={false} />
+                    </div>
+                    
+                    <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none font-display">
+                      SALON
+                    </h2>
+                    
+                    <p className="text-[10px] sm:text-xs font-black text-white tracking-widest uppercase mt-3 max-w-[280px] leading-relaxed font-sans px-1">
+                      {currentDestination.fullTitle}
+                    </p>
+                    
+                    <div className="text-lg sm:text-xl font-mono tracking-[0.25em] font-black text-[#f26d21] mt-5 uppercase">
+                      {currentDestination.name}
+                    </div>
+                    
+                    <div className="mt-5 flex flex-col items-center">
+                      <div className="text-2xl sm:text-3xl font-extrabold text-white leading-none font-display tracking-tight">
+                        DU <span className="text-[#f26d21]">24</span> AU <span className="text-[#f26d21]">26</span>
+                      </div>
+                      <div className="text-xs sm:text-sm font-black text-[#f26d21] tracking-widest uppercase mt-1.5">
+                        SEPTEMBRE 2026
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 bg-[#f26d21] text-white text-[10px] font-mono font-bold uppercase py-1 px-4 rounded-md inline-block font-sans">
+                      Prix d'entrée
+                    </div>
+                    
+                    <div className="text-base sm:text-lg font-black text-white mt-1.5 font-mono">
+                      {currentDestination.entrancePrice}
+                    </div>
+
+                    {/* Team of players representation graphic */}
+                    <div className="mt-6 pt-3 border-t border-white/10 w-full relative overflow-hidden flex flex-col items-center">
+                      <img 
+                        src="/src/assets/images/sportix_douala_team_1780529868220.png" 
+                        alt="Acteurs Professionnels du Sport" 
+                        className="w-full h-36 object-contain object-bottom hover:scale-[1.03] transition-transform duration-300 pointer-events-none select-none"
+                        referrerPolicy="no-referrer"
+                      />
+                      {/* Brand Solid Bottom Orange Bar resembling original visual flier */}
+                      <div className="w-full h-3 bg-[#f26d21] mt-1 rounded-b-[1rem]" />
+                    </div>
+                    
+                    {/* Visual glowing backdrops */}
+                    <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-[#f26d21]/20 rounded-full blur-2xl" />
+                    <div className="absolute -top-16 -right-16 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+                  </div>
+                ) : (
+                  <div className="w-full max-w-sm bg-[#12131a]/85 backdrop-blur-md rounded-[2rem] p-6 sm:p-8 text-center border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] relative overflow-hidden flex flex-col items-center justify-center animate-fade-in select-none">
+                    <div className="mb-4 transform scale-90">
+                      <SportixLogo showSubtitle={false} />
+                    </div>
+                    
+                    <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-none">
+                      SALON SPORTIX
+                    </h2>
+                    
+                    <p className="text-[11px] text-gray-400 mt-2 max-w-[240px]">
+                      Le roadshow d'affaires itinérant dédié à l'innovation et l'industrie du sport.
+                    </p>
+                    
+                    <div className="text-3xl font-black text-[#f26d21] mt-6 tracking-wide uppercase">
+                      {currentDestination.name}
+                    </div>
+                    <div className="text-[9px] font-mono text-gray-400 mt-1 uppercase tracking-widest">
+                      {currentDestination.subtext}
+                    </div>
+
+                    <div className="w-12 h-0.5 bg-[#f26d21]/30 my-5" />
+
+                    <div className="text-[11px] text-gray-400 italic">
+                      "Développement, innovation et synergies professionnelles"
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <span className="text-4xl sm:text-5xl md:text-6xl font-display tracking-widest text-white uppercase font-black drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] leading-none mt-2">
-                {currentDestination.name}
-              </span>
-            </div>
+              {/* RIGHT COLUMN: ACTION & DATA CONTROLS */}
+              <div className="lg:col-span-7 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+                {/* Titles */}
+                <div className="space-y-1.5">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-[#f26d21] bg-[#f26d21]/10 rounded-md">
+                    <Sparkles className="w-3 h-3 text-[#f26d21] animate-pulse" />
+                    <span>Roadshow D'Affaires Cameroun & Afrique</span>
+                  </div>
+                  <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight drop-shadow-md">
+                    {currentDestination.name}
+                  </h1>
+                  <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
+                    {currentDestination.subtext} • 🗓️ {currentDestination.dateText}
+                  </p>
+                </div>
 
-            {/* Date subtitle */}
-            <p className="text-base md:text-lg font-display text-white tracking-widest font-black uppercase select-none text-center md:text-left bg-black/40 border border-white/20 px-4 py-1.5 rounded-lg shadow-lg backdrop-blur-sm">
-              📅 {currentDestination.dateText}
-            </p>
+                {/* Event description */}
+                <div className="bg-black/40 border border-white/5 rounded-2xl p-4 sm:p-5 max-w-xl text-left backdrop-blur-sm shadow-xl">
+                  <p className="text-xs sm:text-xs text-gray-300 leading-relaxed font-light">
+                    {currentDestination.description}
+                  </p>
+                </div>
 
-            {/* Countdown metrics */}
-            <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-sm w-full select-none">
-              {/* DAYS */}
-              <div className="relative flex flex-col items-center justify-center border border-white/10 rounded-xl bg-black/50 backdrop-blur-md py-4 min-w-[70px]">
-                <span className="text-2xl sm:text-4xl font-mono font-bold text-white tracking-tight">
-                  {String(timeLeft.days).padStart(2, '0')}
-                </span>
-                <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
-                  JOURS
-                </span>
-              </div>
+                {/* Countdown Metrics Row */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
+                  <div className="grid grid-cols-4 gap-2.5 w-full select-none">
+                    {/* DAYS */}
+                    <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                        {String(timeLeft.days).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                        JOURS
+                      </span>
+                    </div>
 
-              {/* HOURS */}
-              <div className="relative flex flex-col items-center justify-center border border-white/10 rounded-xl bg-black/50 backdrop-blur-md py-4 min-w-[70px]">
-                <span className="text-2xl sm:text-4xl font-mono font-bold text-white tracking-tight">
-                  {String(timeLeft.hours).padStart(2, '0')}
-                </span>
-                <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
-                  HEURES
-                </span>
-              </div>
+                    {/* HOURS */}
+                    <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                        {String(timeLeft.hours).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                        HEURES
+                      </span>
+                    </div>
 
-              {/* MINUTES */}
-              <div className="relative flex flex-col items-center justify-center border border-white/10 rounded-xl bg-black/50 backdrop-blur-md py-4 min-w-[70px]">
-                <span className="text-2xl sm:text-4xl font-mono font-bold text-white tracking-tight">
-                  {String(timeLeft.minutes).padStart(2, '0')}
-                </span>
-                <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
-                  MINUTES
-                </span>
-              </div>
+                    {/* MINUTES */}
+                    <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                        {String(timeLeft.minutes).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                        MINUTES
+                      </span>
+                    </div>
 
-              {/* SECONDS */}
-              <div className="relative flex flex-col items-center justify-center border border-rose-500/20 rounded-xl bg-[#1a0f12]/45 backdrop-blur-md py-4 min-w-[70px]">
-                <span className="text-2xl sm:text-4xl font-mono font-bold text-rose-450 tracking-tight animate-pulse-slow">
-                  {String(timeLeft.seconds).padStart(2, '0')}
-                </span>
-                <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-[#f43f5e]/60 mt-1 uppercase">
-                  SECONDES
-                </span>
-              </div>
-            </div>
-
-            {/* Cumulative Live Counter System - Continuous addition without arrival */}
-            <div className="w-full max-w-sm flex flex-col bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3.5 select-none relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
-                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Système cumulé en direct (Inscriptions)</span>
-              </div>
-              <div className="flex items-baseline gap-1.5 mt-1.5">
-                <span className="text-2xl font-mono font-bold text-white tracking-tight">
-                  {cumulativeInscriptions.toLocaleString()}
-                </span>
-                <span className="text-xs text-gray-400 font-light font-sans">participants cumulés</span>
-                <span className="flex h-1.5 w-1.5 relative ml-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                </span>
-              </div>
-              <p className="text-[9px] font-mono text-gray-500 mt-1">
-                Mise à jour en continu sans interruption • Réseau Salon Sportix
-              </p>
-            </div>
-
-            {/* Direct Information Details */}
-            <div className="flex flex-col gap-3.5 py-1 w-full max-w-md items-center md:items-start text-left">
-              {currentDestination.phones && currentDestination.phones.length > 0 && (
-                <div className="w-full flex items-start gap-3 bg-amber-500/5 border border-amber-500/20 rounded-xl p-3.5">
-                  <Phone className="w-5 h-5 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
-                  <div>
-                    <h4 className="text-[10px] font-mono uppercase text-amber-500 tracking-wider">Secrétariat & Liaison Directe</h4>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-1.5">
-                      {currentDestination.phones.map((phone, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 font-mono text-sm animate-fade-in">
-                           <span className="w-1 h-1 rounded-full bg-amber-500" />
-                          <a href={`tel:${phone.replace(/\s+/g, '')}`} className="font-bold text-slate-100 hover:text-amber-400 transition-colors">
-                            {phone}
-                          </a>
-                        </div>
-                      ))}
+                    {/* SECONDS */}
+                    <div className="relative flex flex-col items-center justify-center border border-[#f26d21]/20 rounded-xl bg-[#1c110f]/45 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-[#f26d21] tracking-tight animate-pulse-slow">
+                        {String(timeLeft.seconds).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-[#f26d21]/60 mt-1 uppercase">
+                        SECONDES
+                      </span>
                     </div>
                   </div>
                 </div>
-              )}
 
-              {/* Collaborators Panel inside the Direct Info area (No forbidden labels style) */}
-              <div className="w-full bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2 relative">
-                <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest leading-none">Partenaires</p>
-                <div className="flex flex-wrap items-center gap-4.5 mt-1.5">
-                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center">
-                    <InsideSportsLogo className="h-6" />
+                {/* Cumulative Live Counter System */}
+                <div className="w-full max-w-sm flex flex-col bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 select-none relative overflow-hidden group text-left">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Inscriptions & Intérêt (Direct)</span>
                   </div>
-                  <div className="w-px h-5 bg-white/10" />
-                  <div className="hover:scale-105 transition-transform duration-300 w-[60px] flex items-center justify-center bg-neutral-900/60 border border-white/5 rounded p-1">
-                    <FelinLogo className="h-4.5" />
-                  </div>
-                  <div className="w-px h-5 bg-white/10" />
-                  <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center">
-                    <SportThequeLogo className="h-6" />
+                  <div className="flex items-baseline gap-1.5 mt-1">
+                    <span className="text-xl font-mono font-bold text-white tracking-tight">
+                      {cumulativeInscriptions.toLocaleString()}
+                    </span>
+                    <span className="text-xs text-gray-400 font-light font-sans">intéressés cumulés</span>
+                    <span className="flex h-1.5 w-1.5 relative ml-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                    </span>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Buttons array */}
-            <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto pt-2">
-              <motion.button
-                onClick={() => setIsNotifyOpen(true)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto relative flex items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold py-3 px-5 text-xs hover:bg-rose-100 transition-all cursor-pointer shadow-xl shadow-rose-950/5"
-              >
-                <Bell className="w-4 h-4 text-black animate-swing" />
-                <span>S'abonner aux alertes (SMS & Email)</span>
-              </motion.button>
-
-              <motion.button
-                onClick={handleAddToCalendar}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#14151b]/90 border border-white/10 text-white font-semibold hover:border-white/20 py-3 px-5 text-xs transition-all cursor-pointer animate-fade-in"
-              >
-                {copiedLink ? (
-                  <>
-                    <CheckCircle className="w-4 h-4 text-emerald-400 animate-bounce" />
-                    <span>Ajouté au calendrier !</span>
-                  </>
-                ) : (
-                  <>
-                    <Calendar className="w-4 h-4 text-gray-400" />
-                    <span>Ajouter au calendrier</span>
-                  </>
+                {/* Direct Information Details & Phone numbers */}
+                {currentDestination.phones && currentDestination.phones.length > 0 && (
+                  <div className="w-full max-w-md flex items-start gap-3 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 text-left">
+                    <Phone className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
+                    <div>
+                      <h4 className="text-[9px] font-mono uppercase text-amber-500 tracking-wider">Secrétariat & Liaison Directe</h4>
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                        {currentDestination.phones.map((phone, idx) => (
+                          <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
+                            <span className="w-1 h-1 rounded-full bg-amber-500" />
+                            <a href={`tel:${phone.replace(/\s+/g, '')}`} className="font-bold text-slate-100 hover:text-amber-400 transition-colors">
+                              {phone}
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 )}
-              </motion.button>
+
+                {/* Sponsors Panel */}
+                <div className="w-full max-w-md bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2 relative text-left">
+                  <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest leading-none">Partenaires</p>
+                  <div className="flex flex-wrap items-center gap-4 mt-1">
+                    <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
+                      <InsideSportsLogo className="h-5" />
+                    </div>
+                    <div className="w-px h-5 bg-white/10" />
+                    <div className="hover:scale-105 transition-transform duration-300 flex items-center justify-center bg-neutral-900/60 border border-white/5 rounded p-1 h-8 px-2">
+                      <FelinLogo className="h-4" />
+                    </div>
+                    <div className="w-px h-5 bg-white/10" />
+                    <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
+                      <SportThequeLogo className="h-5" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons row */}
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
+                  <motion.button
+                    onClick={() => setIsNotifyOpen(true)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full sm:w-auto relative flex items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold py-3 px-5 text-xs hover:bg-orange-50 transition-all cursor-pointer shadow-xl shadow-orange-950/5 flex-1 font-sans"
+                  >
+                    <Bell className="w-4 h-4 text-black animate-swing" />
+                    <span>S'abonner aux alertes (SMS & Email)</span>
+                  </motion.button>
+
+                  <motion.button
+                    onClick={handleAddToCalendar}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#14151b]/90 border border-white/10 text-white font-semibold hover:border-white/20 py-3 px-5 text-xs transition-all cursor-pointer flex-1 font-sans"
+                  >
+                    {copiedLink ? (
+                      <>
+                        <CheckCircle className="w-4 h-4 text-emerald-450 animate-bounce" />
+                        <span>Ajouté !</span>
+                      </>
+                    ) : (
+                      <>
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Ajouter au calendrier</span>
+                      </>
+                    )}
+                  </motion.button>
+                </div>
+
+              </div>
+
             </div>
           </main>
 

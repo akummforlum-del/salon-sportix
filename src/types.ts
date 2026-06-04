@@ -6,6 +6,8 @@ export interface Destination {
   targetDate: Date; // For real live countdown ticks
   bgImage?: string;
   description: string;
+  fullTitle?: string; // e.g. SALON DES MÉTIERS, ACTEURS ET PROFESSIONNELS DU SPORT
+  entrancePrice?: string; // e.g. 500 F CFA / 1.000 F CFA
   phones?: string[]; // Contact numbers specific to this destination from manual notes
   reachedCount?: number; // Number of people who reached this point when they entered the website
   infoCards: {

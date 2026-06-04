@@ -5,7 +5,9 @@ export const DESTINATIONS: Destination[] = [
     id: 'douala',
     name: 'DOUALA',
     subtext: 'CAMEROUN',
-    dateText: '24 - 26 SEPTEMBRE 2026',
+    dateText: 'DU 24 AU 26 SEPTEMBRE 2026',
+    fullTitle: 'SALON DES MÉTIERS, ACTEURS ET PROFESSIONNELS DU SPORT',
+    entrancePrice: '500 F CFA / 1.000 F CFA',
     // Set to 24th September 24-26, 2026
     targetDate: new Date('2026-09-24T09:00:00'),
     description: "Le premier rendez-vous de l'innovation sportive en Afrique Centrale. Le Salon Sportix Douala réunira les leaders d'opinion, les marques emblématiques, les start-ups technologiques et les décideurs institutionnels pour structurer l'avenir de notre salon-écosystème.",
