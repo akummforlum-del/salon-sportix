@@ -8,7 +8,6 @@ import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
 import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
-import teamImg from '../assets/images/sportix_douala_team_1780529868220.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 
@@ -366,114 +365,36 @@ END:VCALENDAR`;
         >
           {/* Inner Content Block */}
           <main className="w-full max-w-6xl z-10 py-8 px-2 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-11 items-center">
-              
-              {/* LEFT COLUMN: THE DIGITAL EVENT FLIER / POSTER RECREATION */}
-              <div className="lg:col-span-5 flex items-center justify-center w-full">
-                {currentDestination.fullTitle ? (
-                  <div className="w-full max-w-sm bg-[#232b85] rounded-[2.5rem] p-6 sm:p-8 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col items-center justify-center animate-fade-in select-none">
-                    {/* Miniature Sportix Logo */}
-                    <div className="mb-4 transform scale-90">
-                      <SportixLogo showSubtitle={false} />
-                    </div>
-                    
-                    <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none font-display">
-                      SALON
-                    </h2>
-                    
-                    <p className="text-[10px] sm:text-xs font-black text-white tracking-widest uppercase mt-3 max-w-[280px] leading-relaxed font-sans px-1">
-                      {currentDestination.fullTitle}
-                    </p>
-                    
-                    <div className="text-lg sm:text-xl font-mono tracking-[0.25em] font-black text-[#f26d21] mt-5 uppercase">
-                      {currentDestination.name}
-                    </div>
-                    
-                    <div className="mt-5 flex flex-col items-center">
-                      <div className="text-2xl sm:text-3xl font-extrabold text-white leading-none font-display tracking-tight">
-                        DU <span className="text-[#f26d21]">24</span> AU <span className="text-[#f26d21]">26</span>
-                      </div>
-                      <div className="text-xs sm:text-sm font-black text-[#f26d21] tracking-widest uppercase mt-1.5">
-                        SEPTEMBRE 2026
-                      </div>
-                    </div>
-                    
-                    <div className="mt-6 bg-[#f26d21] text-white text-[10px] font-mono font-bold uppercase py-1 px-4 rounded-md inline-block font-sans">
-                      Prix d'entrée
-                    </div>
-                    
-                    <div className="text-base sm:text-lg font-black text-white mt-1.5 font-mono">
-                      {currentDestination.entrancePrice}
-                    </div>
-
-                    {/* Team of players representation graphic */}
-                    <div className="mt-6 pt-3 border-t border-white/10 w-full relative overflow-hidden flex flex-col items-center">
-                      <img 
-                        src={teamImg} 
-                        alt="Acteurs Professionnels du Sport" 
-                        className="w-full h-36 object-contain object-bottom hover:scale-[1.03] transition-transform duration-300 pointer-events-none select-none"
-                        referrerPolicy="no-referrer"
-                      />
-                      {/* Brand Solid Bottom Orange Bar resembling original visual flier */}
-                      <div className="w-full h-3 bg-[#f26d21] mt-1 rounded-b-[1rem]" />
-                    </div>
-                    
-                    {/* Visual glowing backdrops */}
-                    <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-[#f26d21]/20 rounded-full blur-2xl" />
-                    <div className="absolute -top-16 -right-16 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+            <div className="space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+              {/* Titles */}
+              <div className="space-y-3 flex flex-col items-center lg:items-start select-none">
+                  {/* "SALON" */}
+                  <div className="text-4xl sm:text-5xl font-black tracking-tight text-white font-display leading-none">
+                    SALON
                   </div>
-                ) : (
-                  <div className="w-full max-w-sm bg-[#12131a]/85 backdrop-blur-md rounded-[2rem] p-6 sm:p-8 text-center border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] relative overflow-hidden flex flex-col items-center justify-center animate-fade-in select-none">
-                    <div className="mb-4 transform scale-90">
-                      <SportixLogo showSubtitle={false} />
-                    </div>
-                    
-                    <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-none">
-                      SALON SPORTIX
-                    </h2>
-                    
-                    <p className="text-[11px] text-gray-400 mt-2 max-w-[240px]">
-                      Le roadshow d'affaires itinérant dédié à l'innovation et l'industrie du sport.
-                    </p>
-                    
-                    <div className="text-3xl font-black text-[#f26d21] mt-6 tracking-wide uppercase">
+                  
+                  {/* "Sportix" Logo */}
+                  <div className="transform scale-90 sm:scale-100 origin-center lg:origin-left py-1">
+                    <SportixLogo showSubtitle={false} />
+                  </div>
+
+                  {/* Name of the place (city) and subtext */}
+                  <div className="flex flex-col items-center lg:items-start">
+                    <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight drop-shadow-md">
                       {currentDestination.name}
-                    </div>
-                    <div className="text-[9px] font-mono text-gray-400 mt-1 uppercase tracking-widest">
+                    </h1>
+                    <span className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
                       {currentDestination.subtext}
-                    </div>
-
-                    <div className="w-12 h-0.5 bg-[#f26d21]/30 my-5" />
-
-                    <div className="text-[11px] text-gray-400 italic">
-                      "Développement, innovation et synergies professionnelles"
-                    </div>
+                    </span>
                   </div>
-                )}
-              </div>
 
-              {/* RIGHT COLUMN: ACTION & DATA CONTROLS */}
-              <div className="lg:col-span-7 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
-                {/* Titles */}
-                <div className="space-y-1.5">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-[#f26d21] bg-[#f26d21]/10 rounded-md">
-                    <Sparkles className="w-3 h-3 text-[#f26d21] animate-pulse" />
-                    <span>Roadshow D'Affaires Cameroun & Afrique</span>
+                  {/* Bold Date in prominent display style so it is easily seen */}
+                  <div className="text-xl sm:text-2xl font-display font-black text-[#f26d21] tracking-wide uppercase drop-shadow-md py-1 border-t border-b border-white/5 w-full lg:w-auto text-center lg:text-left">
+                    🗓️ {currentDestination.dateText}
                   </div>
-                  <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight drop-shadow-md">
-                    {currentDestination.name}
-                  </h1>
-                  <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
-                    {currentDestination.subtext} • 🗓️ {currentDestination.dateText}
-                  </p>
                 </div>
 
-                {/* Event description */}
-                <div className="bg-black/40 border border-white/5 rounded-2xl p-4 sm:p-5 max-w-xl text-left backdrop-blur-sm shadow-xl">
-                  <p className="text-xs sm:text-xs text-gray-300 leading-relaxed font-light">
-                    {currentDestination.description}
-                  </p>
-                </div>
+
 
                 {/* Countdown Metrics Row */}
                 <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
@@ -608,8 +529,6 @@ END:VCALENDAR`;
                     )}
                   </motion.button>
                 </div>
-
-              </div>
 
             </div>
           </main>
