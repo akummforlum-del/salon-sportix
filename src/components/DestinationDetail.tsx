@@ -8,6 +8,7 @@ import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
 import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
+import exactPeopleImg from '../assets/images/sportix_exact_people_1780550707928.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 
@@ -365,9 +366,238 @@ END:VCALENDAR`;
         >
           {/* Inner Content Block */}
           <main className="w-full max-w-6xl z-10 py-8 px-2 sm:px-6">
-            <div className="space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
-              {/* Titles */}
-              <div className="space-y-3 flex flex-col items-center lg:items-start select-none">
+            {currentDestination.id === 'douala' ? (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-11 items-center">
+                
+                {/* LEFT COLUMN: THE DIGITAL EVENT FLIER / POSTER RECREATION */}
+                <div className="lg:col-span-5 flex items-center justify-center w-full">
+                  <div className="w-full max-w-sm bg-[#232b85] rounded-[2.5rem] pt-6 sm:pt-8 pb-0 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col items-center justify-between min-h-[500px] sm:min-h-[560px] select-none">
+                    {/* Miniature Sportix Logo */}
+                    <div className="mb-2 transform scale-90">
+                      <SportixLogo showSubtitle={false} />
+                    </div>
+                    
+                    <div className="px-4 flex-1 flex flex-col items-center justify-center space-y-3.5">
+                      <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none font-display">
+                        SALON
+                      </h2>
+                      
+                      <p className="text-[10px] sm:text-xs font-black text-white/95 tracking-normal uppercase max-w-[280px] leading-relaxed font-sans px-1 text-center font-display">
+                        {currentDestination.fullTitle}
+                      </p>
+                      
+                      <div className="text-sm sm:text-base font-bold tracking-[0.2em] font-sans text-amber-500 uppercase">
+                        {currentDestination.name}
+                      </div>
+                      
+                      <div className="py-2.5 flex flex-col items-center">
+                        <div className="text-2xl sm:text-3xl font-extrabold text-white leading-none font-display tracking-tight">
+                          DU <span className="text-white">24</span> AU <span className="text-white">26</span>
+                        </div>
+                        <div className="text-xs sm:text-sm font-black text-white tracking-widest uppercase mt-1">
+                          SEPTEMBRE 2026
+                        </div>
+                      </div>
+                      
+                      <div className="bg-[#f26d21] text-white text-[9px] font-[#0a0b10] font-bold uppercase py-0.5 px-3.5 rounded mt-1.5 inline-block font-sans">
+                        Prix d'entrée
+                      </div>
+                      
+                      <div className="text-base sm:text-lg font-black text-white font-mono">
+                        {currentDestination.entrancePrice}
+                      </div>
+                    </div>
+
+                    {/* Integrated dynamic image blending beautifully at bottom */}
+                    <div className="relative w-full overflow-hidden mt-6">
+                      <img 
+                        src={exactPeopleImg} 
+                        alt="Audience & Athletes" 
+                        className="w-full h-auto object-cover transform translate-y-1 scale-105 animate-fade-in"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-4 bg-gradient-to-t from-[#232b85]/40 to-transparent" />
+                    </div>
+                    
+                    {/* Orange Bottom Band */}
+                    <div className="w-full h-3.5 bg-[#f26d21]" />
+
+                    {/* Visual glowing backdrops */}
+                    <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-[#f26d21]/15 rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute -top-16 -right-16 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* RIGHT COLUMN: ACTION & DATA CONTROLS */}
+                <div className="lg:col-span-7 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+                  {/* Titles */}
+                  <div className="space-y-3 flex flex-col items-center lg:items-start select-none">
+                    {/* "SALON" */}
+                    <div className="text-4xl sm:text-5xl font-black tracking-tight text-white font-display leading-none">
+                      SALON
+                    </div>
+                    
+                    {/* "Sportix" Logo */}
+                    <div className="transform scale-90 sm:scale-100 origin-center lg:origin-left py-1">
+                      <SportixLogo showSubtitle={false} />
+                    </div>
+
+                    {/* Name of the place (city) and subtext */}
+                    <div className="flex flex-col items-center lg:items-start">
+                      <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight drop-shadow-md">
+                        {currentDestination.name}
+                      </h1>
+                      <span className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
+                        {currentDestination.subtext}
+                      </span>
+                    </div>
+
+                    {/* Bold Date in prominent display style so it is easily seen (White color) */}
+                    <div className="text-xl sm:text-2xl font-display font-black text-white tracking-wide uppercase drop-shadow-md py-1 border-t border-b border-white/5 w-full lg:w-auto text-center lg:text-left">
+                      🗓️ {currentDestination.dateText}
+                    </div>
+                  </div>
+
+                  {/* Countdown Metrics Row */}
+                  <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
+                    <div className="grid grid-cols-4 gap-2.5 w-full select-none">
+                      {/* DAYS */}
+                      <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                        <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                          {String(timeLeft.days).padStart(2, '0')}
+                        </span>
+                        <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                          JOURS
+                        </span>
+                      </div>
+
+                      {/* HOURS */}
+                      <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                        <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                          {String(timeLeft.hours).padStart(2, '0')}
+                        </span>
+                        <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                          HEURES
+                        </span>
+                      </div>
+
+                      {/* MINUTES */}
+                      <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                        <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                          {String(timeLeft.minutes).padStart(2, '0')}
+                        </span>
+                        <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                          MINUTES
+                        </span>
+                      </div>
+
+                      {/* SECONDS */}
+                      <div className="relative flex flex-col items-center justify-center border border-[#f26d21]/20 rounded-xl bg-[#1c110f]/45 backdrop-blur-md py-3 min-w-[65px]">
+                        <span className="text-xl sm:text-2xl font-mono font-bold text-[#f26d21] tracking-tight animate-pulse-slow">
+                          {String(timeLeft.seconds).padStart(2, '0')}
+                        </span>
+                        <span className="text-[7.5px] font-mono tracking-widest text-[#f26d21]/60 mt-1 uppercase">
+                          SECONDES
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Cumulative Live Counter System */}
+                  <div className="w-full max-w-sm flex flex-col bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 select-none relative overflow-hidden group text-left">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Inscriptions & Intérêt (Direct)</span>
+                    </div>
+                    <div className="flex items-baseline gap-1.5 mt-1">
+                      <span className="text-xl font-mono font-bold text-white tracking-tight">
+                        {cumulativeInscriptions.toLocaleString()}
+                      </span>
+                      <span className="text-xs text-gray-400 font-light font-sans">intéressés cumulés</span>
+                      <span className="flex h-1.5 w-1.5 relative ml-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Direct Information Details & Phone numbers */}
+                  {currentDestination.phones && currentDestination.phones.length > 0 && (
+                    <div className="w-full max-w-md flex items-start gap-3 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 text-left">
+                      <Phone className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
+                      <div>
+                        <h4 className="text-[9px] font-mono uppercase text-amber-500 tracking-wider">Secrétariat & Liaison Directe</h4>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                          {currentDestination.phones.map((phone, idx) => (
+                            <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
+                              <span className="w-1 h-1 rounded-full bg-amber-500" />
+                              <a href={`tel:${phone.replace(/\s+/g, '')}`} className="font-bold text-slate-100 hover:text-amber-400 transition-colors">
+                                {phone}
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Sponsors Panel */}
+                  <div className="w-full max-w-md bg-[#13141b]/95 border border-white/5 rounded-xl p-3.5 flex flex-col gap-2 relative text-left">
+                    <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest leading-none">Partenaires</p>
+                    <div className="flex flex-wrap items-center gap-4 mt-1">
+                      <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
+                        <InsideSportsLogo className="h-5" />
+                      </div>
+                      <div className="w-px h-5 bg-white/10" />
+                      <div className="hover:scale-105 transition-transform duration-300 flex items-center justify-center bg-neutral-900/60 border border-white/5 rounded p-1 h-8 px-2">
+                        <FelinLogo className="h-4" />
+                      </div>
+                      <div className="w-px h-5 bg-white/10" />
+                      <div className="hover:scale-105 transition-transform duration-300 bg-neutral-900/60 border border-white/5 rounded p-1 flex items-center justify-center h-8">
+                        <SportThequeLogo className="h-5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons row */}
+                  <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
+                    <motion.button
+                      onClick={() => setIsNotifyOpen(true)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full sm:w-auto relative flex items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold py-3 px-5 text-xs hover:bg-orange-50 transition-all cursor-pointer shadow-xl shadow-orange-950/5 flex-1 font-sans"
+                    >
+                      <Bell className="w-4 h-4 text-black animate-swing" />
+                      <span>S'abonner aux alertes (SMS & Email)</span>
+                    </motion.button>
+
+                    <motion.button
+                      onClick={handleAddToCalendar}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#14151b]/90 border border-white/10 text-white font-semibold hover:border-white/20 py-3 px-5 text-xs transition-all cursor-pointer flex-1 font-sans"
+                    >
+                      {copiedLink ? (
+                        <>
+                          <CheckCircle className="w-4 h-4 text-emerald-450 animate-bounce" />
+                          <span>Ajouté !</span>
+                        </>
+                      ) : (
+                        <>
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <span>Ajouter au calendrier</span>
+                        </>
+                      )}
+                    </motion.button>
+                  </div>
+                </div>
+
+              </div>
+            ) : (
+              <div className="space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+                {/* Titles */}
+                <div className="space-y-3 flex flex-col items-center lg:items-start select-none">
                   {/* "SALON" */}
                   <div className="text-4xl sm:text-5xl font-black tracking-tight text-white font-display leading-none">
                     SALON
@@ -388,13 +618,11 @@ END:VCALENDAR`;
                     </span>
                   </div>
 
-                  {/* Bold Date in prominent display style so it is easily seen */}
-                  <div className="text-xl sm:text-2xl font-display font-black text-[#f26d21] tracking-wide uppercase drop-shadow-md py-1 border-t border-b border-white/5 w-full lg:w-auto text-center lg:text-left">
+                  {/* Bold Date in prominent display style so it is easily seen (White color) */}
+                  <div className="text-xl sm:text-2xl font-display font-black text-white tracking-wide uppercase drop-shadow-md py-1 border-t border-b border-white/5 w-full lg:w-auto text-center lg:text-left">
                     🗓️ {currentDestination.dateText}
                   </div>
                 </div>
-
-
 
                 {/* Countdown Metrics Row */}
                 <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
@@ -529,8 +757,8 @@ END:VCALENDAR`;
                     )}
                   </motion.button>
                 </div>
-
-            </div>
+              </div>
+            )}
           </main>
 
 
