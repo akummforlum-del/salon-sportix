@@ -8,6 +8,7 @@ import { DESTINATIONS } from '../data';
 import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
 import bgImg from '../assets/images/sportix_podcast_bg_1780492302036.png';
+import teamImg from '../assets/images/sportix_douala_team_1780529868220.png';
 import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 
@@ -408,7 +409,7 @@ END:VCALENDAR`;
                     {/* Team of players representation graphic */}
                     <div className="mt-6 pt-3 border-t border-white/10 w-full relative overflow-hidden flex flex-col items-center">
                       <img 
-                        src="/src/assets/images/sportix_douala_team_1780529868220.png" 
+                        src={teamImg} 
                         alt="Acteurs Professionnels du Sport" 
                         className="w-full h-36 object-contain object-bottom hover:scale-[1.03] transition-transform duration-300 pointer-events-none select-none"
                         referrerPolicy="no-referrer"
