@@ -275,7 +275,6 @@ export default function DestinationOrbit({
             {/* Orange Cameroun */}
             <div className="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 px-3 py-1.5 rounded-lg" title="Support Orange Cameroun">
               <div className="w-2 h-2 rounded-full bg-orange-500" />
-              <span className="font-mono text-[10px] text-gray-400">Orange :</span>
               <a href="tel:+237694885086" className="font-mono font-bold text-white hover:text-orange-400 transition-colors">
                 +237 694 88 50 86
               </a>
@@ -284,7 +283,6 @@ export default function DestinationOrbit({
             {/* MTN Support */}
             <div className="flex items-center gap-1.5 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg" title="Support MTN Cameroun">
               <div className="w-2 h-2 rounded-full bg-amber-400" />
-              <span className="font-mono text-[10px] text-gray-400">MTN :</span>
               <a href="tel:+237654152499" className="font-mono font-bold text-white hover:text-amber-400 transition-colors">
                 +237 654 15 24 99
               </a>
