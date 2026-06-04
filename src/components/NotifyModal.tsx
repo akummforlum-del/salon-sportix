@@ -14,6 +14,7 @@ export default function NotifyModal({ isOpen, onClose, destination }: NotifyModa
   const [whatsapp, setWhatsapp] = useState('');
   const [interest, setInterest] = useState<'visitor' | 'speaker' | 'sponsor' | 'media' | 'expo'>('visitor');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [generatedUrl, setGeneratedUrl] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,11 +25,41 @@ export default function NotifyModal({ isOpen, onClose, destination }: NotifyModa
 
     setStatus('loading');
     
+    // Construct the customized subscription text message
+    const interestLabels: Record<string, string> = {
+      visitor: '🎟️ Visiteur (Intérêt général)',
+      expo: '🎪 Exposant (Réserver un Stand)',
+      sponsor: '🤝 Sponsor / Partenariat',
+      speaker: '🎙️ Intervenant / Conférencier',
+      media: '📹 Presse / Accréditation Média'
+    };
+    const interestLabel = interestLabels[interest] || interest;
+
+    const text = `Bonjour Salon Sportix ${destination.name},\n\n` +
+                 `Je viens de m'abonner aux alertes depuis le site internet de Sportix pour l'édition de ${destination.name}.\n\n` +
+                 `* 📧 Adresse E-mail : ${email}\n` +
+                 `* 📲 WhatsApp : ${whatsapp || 'Non spécifié'}\n` +
+                 `* 🎯 Participation : ${interestLabel}\n\n` +
+                 `Veuillez m'inscrire pour recevoir en priorité les alertes officielles, stands et billetterie. Merci !`;
+
+    const cleanPhones = destination.phones || [];
+    const destinationPhone = cleanPhones[0] || '237694885086';
+    const rawNumber = destinationPhone.replace(/[^\d]/g, '');
+    const whatsappUrl = `https://wa.me/${rawNumber}?text=${encodeURIComponent(text)}`;
+    setGeneratedUrl(whatsappUrl);
+
     // Simulate API registration call (Persisting Email & WhatsApp)
     setTimeout(() => {
       setStatus('success');
       setEmail('');
       setWhatsapp('');
+      
+      // Auto open custom generated WhatsApp link
+      try {
+        window.open(whatsappUrl, '_blank');
+      } catch (err) {
+        console.warn("Automated popup block detected, manual action button provided.", err);
+      }
     }, 1200);
   };
 
@@ -198,10 +229,26 @@ export default function NotifyModal({ isOpen, onClose, destination }: NotifyModa
                 <h3 className="font-display text-lg font-semibold text-white mb-2">
                   Abonnement Activé !
                 </h3>
-                <p className="text-xs text-gray-400 max-w-sm mb-6 leading-relaxed">
+                <p className="text-xs text-gray-400 max-w-sm mb-5 leading-relaxed">
                   Excellent ! Vos coordonnées ont été enregistrées pour l'édition <strong className="text-white">Sportix {destination.name}</strong>.<br />
-                  Vous recevrez la programmation ainsi que les alertes stands/billetterie en priorité par <strong className="text-emerald-400">E-mail et WhatsApp</strong>.
+                  Vous recevrez la programmation ainsi que les alertes en priorité par <strong className="text-emerald-400">E-mail et WhatsApp</strong>.
                 </p>
+
+                {/* Direct Action Link to send raw WhatsApp confirmation */}
+                <div className="w-full bg-[#1c2e1f]/30 border border-emerald-500/20 rounded-2xl p-4 mb-6 text-left">
+                  <p className="text-gray-300 text-[11px] mb-3 leading-relaxed">
+                    Si la redirection automatique n'a pas fonctionné ou s'est fermée, cliquez ci-dessous pour envoyer vos informations directement sur WhatsApp :
+                  </p>
+                  <a
+                    href={generatedUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-[#22c55e] hover:bg-[#1fbd58] text-white font-bold font-sans rounded-xl py-3 px-4 text-xs transition-all tracking-wide shadow-md hover:scale-101 cursor-pointer"
+                  >
+                    💬 Envoyer mes infos sur WhatsApp
+                  </a>
+                </div>
+
                 <button
                   onClick={onClose}
                   className="rounded-xl bg-white/5 border border-white/10 px-5 py-2.5 text-[10px] font-mono text-white hover:bg-white/10 transition-all cursor-pointer"

@@ -392,11 +392,70 @@ END:VCALENDAR`;
           {/* Inner Content Block */}
           <main className="w-full max-w-6xl z-10 py-8 px-2 sm:px-6">
             {currentDestination.id === 'douala' ? (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-11 items-center">
+              <div className="flex flex-col items-center w-full max-w-4xl mx-auto space-y-6">
                 
-                {/* LEFT COLUMN: THE DIGITAL EVENT FLIER / POSTER RECREATION */}
-                <div className="lg:col-span-5 flex items-center justify-center w-full">
-                  <div className="w-full max-w-sm bg-[#232b85] rounded-[2.5rem] pt-6 sm:pt-8 pb-0 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col items-center justify-between min-h-[500px] sm:min-h-[560px] select-none">
+                {/* Titles */}
+                <div className="flex flex-col items-center text-center select-none">
+                  <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col sm:flex-row items-center justify-center gap-x-2.5 gap-y-1 mt-1">
+                    <span>SALON SPORTIX</span>
+                    <span className="text-rose-450 uppercase">
+                      {currentDestination.name}
+                    </span>
+                  </h1>
+                  <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
+                    📍 {currentDestination.subtext}
+                  </p>
+                </div>
+
+                {/* Countdown Metrics Row (Contour Time) */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
+                  <div className="grid grid-cols-4 gap-2.5 w-full select-none">
+                    {/* DAYS */}
+                    <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                        {String(timeLeft.days).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                        JOURS
+                      </span>
+                    </div>
+
+                    {/* HOURS */}
+                    <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                        {String(timeLeft.hours).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                        HEURES
+                      </span>
+                    </div>
+
+                    {/* MINUTES */}
+                    <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
+                        {String(timeLeft.minutes).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
+                        MINUTES
+                      </span>
+                    </div>
+
+                    {/* SECONDS */}
+                    <div className="relative flex flex-col items-center justify-center border border-[#f26d21]/20 rounded-xl bg-[#1c110f]/45 backdrop-blur-md py-3 min-w-[65px]">
+                      <span className="text-xl sm:text-2xl font-mono font-bold text-[#f26d21] tracking-tight animate-pulse-slow">
+                        {String(timeLeft.seconds).padStart(2, '0')}
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-widest text-[#f26d21]/60 mt-1 uppercase">
+                        SECONDES
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Two Visual Cards (Viseul) just below Contour Time */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mt-2 px-1">
+                  {/* Visual 1: Premium Blue Poster fitted perfectly inside */}
+                  <div className="w-full bg-[#232b85] rounded-[2.5rem] pt-6 sm:pt-8 pb-0 text-center border-4 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col items-center justify-between min-h-[500px] sm:min-h-[560px] select-none">
                     {/* Miniature Sportix Logo */}
                     <div className="mb-2 transform scale-90">
                       <SportixLogo showSubtitle={false} />
@@ -415,25 +474,12 @@ END:VCALENDAR`;
                         {currentDestination.name}
                       </div>
                       
-                      <div className="py-2.5 px-3 w-full bg-white/5 rounded-2xl border border-white/10 flex flex-col items-center justify-center space-y-1.5 mt-1">
-                        <span className="text-[9px] font-mono tracking-widest text-emerald-400 font-black uppercase">CLIQUEZ POUR CHATTER WHATSAPP</span>
-                        <div className="flex flex-col items-center gap-1 w-full">
-                          {currentDestination.phones.map((phone, idx) => (
-                            <a 
-                              key={idx}
-                              href={getWhatsappLink(phone, selectedRequest)}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="w-full flex items-center justify-center gap-1 py-1 px-2.5 bg-emerald-500/15 border border-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 font-bold font-mono text-[10.5px] rounded-xl transition-all cursor-pointer"
-                            >
-                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                              {phone}
-                            </a>
-                          ))}
-                        </div>
+                      <div className="bg-white/10 text-white text-xs sm:text-sm font-black tracking-normal px-4 py-2 rounded-2xl border border-white/10 shadow-md flex items-center gap-2 mt-0.5">
+                        <span>🗓️</span>
+                        <span>Du 24-26 septembre 2026</span>
                       </div>
                       
-                      <div className="bg-[#f26d21] text-white text-[9px] font-[#0a0b10] font-bold uppercase py-0.5 px-3.5 rounded mt-1.5 inline-block font-sans">
+                      <div className="bg-[#f26d21] text-white text-[9px] font-bold uppercase py-0.5 px-3.5 rounded mt-1.5 inline-block font-sans">
                         Prix d'entrée
                       </div>
                       
@@ -452,6 +498,25 @@ END:VCALENDAR`;
                       />
                       <div className="absolute inset-x-0 bottom-0 h-4 bg-gradient-to-t from-[#232b85]/40 to-transparent" />
                     </div>
+
+                    {/* Integrated WhatsApp numbers section below the image */}
+                    <div className="py-3.5 px-5 w-full bg-black/30 border-t border-b border-white/5 flex flex-col items-center justify-center space-y-1.5 z-10 relative">
+                      <span className="text-[9px] font-mono tracking-widest text-[#22c55e] font-extrabold uppercase">CLIQUEZ POUR CHATTER WHATSAPP</span>
+                      <div className="flex flex-col items-center gap-1.5 w-full">
+                        {currentDestination.phones.map((phone, idx) => (
+                          <a 
+                            key={idx}
+                            href={getWhatsappLink(phone, selectedRequest)}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full flex items-center justify-center gap-1 py-1.5 px-3 bg-[#22c55e]/15 border border-[#22c55e]/20 hover:bg-[#22c55e]/30 text-[#22c55e] font-bold font-mono text-[10.5px] rounded-xl transition-all cursor-pointer shadow-md shadow-black/10"
+                          >
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse shrink-0" />
+                            {phone}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
                     
                     {/* Orange Bottom Band */}
                     <div className="w-full h-3.5 bg-[#f26d21]" />
@@ -459,72 +524,183 @@ END:VCALENDAR`;
                     {/* Visual glowing backdrops */}
                     <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-[#f26d21]/15 rounded-full blur-2xl pointer-events-none" />
                     <div className="absolute -top-16 -right-16 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+
+                    {/* Futuristic Glass & Holographic Overlay Filter for Visual 1 */}
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/0 via-white/10 to-white/0 mix-blend-overlay opacity-80 z-20 transition-all duration-700 group-hover/v1:rotate-12 group-hover/v1:scale-150" />
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-blue-400/20 via-transparent to-transparent mix-blend-color-dodge z-10" />
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-[#f26d21]/15 via-transparent to-transparent mix-blend-plus-lighter z-10" />
+                    <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.12)_50%)] bg-[size:100%_4px] opacity-25 z-10" />
+                  </div>
+
+                  {/* Visual 2: Recreated High-Fidelity physical flyer from the uploaded image */}
+                  <div className="rounded-[2.5rem] border-4 border-white/20 bg-[#f8fafc] flex flex-col justify-between items-center relative overflow-hidden group/v2 select-none min-h-[500px] sm:min-h-[560px] text-center shadow-[0_25px_60px_rgba(0,0,0,0.85)] text-slate-900">
+                    
+                    {/* Abstract high-rise background pattern like skyscraper blueprint */}
+                    <div className="absolute inset-0 opacity-[0.04] pointer-events-none z-0">
+                      <svg className="w-full h-full" viewBox="0 0 400 600" fill="currentColor">
+                        <rect x="25" y="180" width="45" height="420" />
+                        <rect x="80" y="120" width="55" height="480" />
+                        <rect x="145" y="70" width="65" height="530" />
+                        <rect x="220" y="220" width="50" height="380" />
+                        <rect x="280" y="140" width="60" height="460" />
+                        <rect x="350" y="90" width="45" height="510" />
+                        <line x1="0" y1="250" x2="400" y2="250" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6,6" />
+                        <line x1="0" y1="380" x2="400" y2="380" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6,6" />
+                        <line x1="0" y1="480" x2="400" y2="480" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6,6" />
+                      </svg>
+                    </div>
+
+                    {/* Logo Section */}
+                    <div className="pt-6 sm:pt-7 w-full flex items-center justify-center z-10 transition-transform group-hover/v2:scale-102 duration-300">
+                      <SportixLogo showSubtitle={false} />
+                    </div>
+
+                    {/* Header Title Match */}
+                    <div className="px-5 mt-2.5 z-10">
+                      <h3 className="text-xs sm:text-[14px]/tight font-sans font-black tracking-tight text-[#232b85] uppercase">
+                        SALON DES MÉTIERS, ACTEURS ET<br />
+                        <span className="text-[#f26d21]">PROFESSIONNELS DU SPORT</span>
+                      </h3>
+                    </div>
+
+                    {/* "C'est" Pill Wrapper */}
+                    <div className="my-2 z-10">
+                      <span className="bg-[#f26d21] text-white font-sans font-black text-[11px] sm:text-xs px-6 py-1 rounded-lg uppercase tracking-wider inline-block shadow-md">
+                        C'est
+                      </span>
+                    </div>
+
+                    {/* Bullet Points of Activities */}
+                    <div className="w-full px-5 flex flex-col items-center space-y-1.5 z-10 text-slate-800">
+                      {/* Dominant Highlight Centered */}
+                      <div className="flex items-center gap-1.5 justify-center py-0.5 px-3 bg-orange-500/5 rounded-full border border-orange-500/10">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0 animate-ping" />
+                        <span className="text-[10px] sm:text-[11px] font-black text-slate-850 uppercase tracking-tight">Visite des stands des exposants</span>
+                      </div>
+
+                      {/* Columns Grid */}
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 w-full text-left max-w-[290px] sm:max-w-md mx-auto pt-1 pb-3 px-1">
+                        {/* Left Column Activities */}
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Masterclass</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Causerie débats</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Afterworks</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Jeux / Tombola</span>
+                          </div>
+                        </div>
+
+                        {/* Right Column Activities */}
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Séminaires</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Meet & Greet Legends</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Biopic</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#f26d21] shrink-0" />
+                            <span className="text-[9.5px] sm:text-[10.5px] font-extrabold text-slate-800">Couverture Média</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Dual Pricing Tables Option layout */}
+                    <div className="grid grid-cols-2 gap-2 w-full px-3.5 mb-2.5 z-10 text-left">
+                      {/* Option 500 CFA */}
+                      <div className="bg-[#108c44] rounded-2xl p-2.5 text-white flex flex-col justify-between h-full shadow-[0_4px_12px_rgba(16,140,68,0.25)] hover:scale-102 transition-transform duration-300">
+                        <div>
+                          <div className="border-b border-white/20 pb-1 mb-1.5">
+                            <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-semibold opacity-85">Ticket / jour</p>
+                            <p className="text-xs sm:text-[13px] font-mono font-black text-yellow-300 mt-0.5">500 F CFA</p>
+                          </div>
+                          <ul className="space-y-1 text-[8px] sm:text-[8.5px]/tight font-medium opacity-95">
+                            <li className="flex items-start gap-1">
+                              <span className="opacity-95">•</span>
+                              <span>1 ticket d'entrée pour visiter les stands</span>
+                            </li>
+                            <li className="flex items-start gap-1">
+                              <span className="opacity-95">•</span>
+                              <span>1 ticket tombola pour de nombreux lots</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Option 1000 CFA */}
+                      <div className="bg-[#e0560b] rounded-2xl p-2.5 text-white flex flex-col justify-between h-full shadow-[0_4px_12px_rgba(224,86,11,0.25)] hover:scale-102 transition-transform duration-300">
+                        <div>
+                          <div className="border-b border-white/20 pb-1 mb-1.5">
+                            <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-semibold opacity-85">Ticket / jour</p>
+                            <p className="text-xs sm:text-[13px] font-mono font-black text-yellow-200 mt-0.5">1 000 F CFA</p>
+                          </div>
+                          <ul className="space-y-1 text-[7.5px] sm:text-[8px]/tight font-medium opacity-95">
+                            <li className="flex items-start gap-0.5">
+                              <span>•</span>
+                              <span>1 ticket d'entrée</span>
+                            </li>
+                            <li className="flex items-start gap-0.5">
+                              <span>•</span>
+                              <span>1 petite bouteille d'eau</span>
+                            </li>
+                            <li className="flex items-start gap-0.5">
+                              <span>•</span>
+                              <span>1 ticket tombola (super lots)</span>
+                            </li>
+                            <li className="flex items-start gap-0.5">
+                              <span>•</span>
+                              <span>Accès aux stands + séminaires</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Branded Contact & Web bar */}
+                    <div className="w-full bg-[#232b85] py-2.5 px-4 flex items-center justify-between text-white text-[9px] font-mono border-t border-slate-200/5 z-10">
+                      <a href="https://www.salon-sportix.com" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-orange-400 transition-colors">
+                        <Globe className="w-3 text-orange-400" />
+                        <span>www.salon-sportix.com</span>
+                      </a>
+                      
+                      <div className="flex items-center gap-1 text-white/95 font-bold">
+                        <Phone className="w-3 text-orange-400" />
+                        <a href="tel:+237694885086" className="hover:text-orange-450 transition-colors">694 88 50 86</a>
+                        <span>/</span>
+                        <a href="tel:+237695711582" className="hover:text-orange-450 transition-colors">695 71 15 82</a>
+                      </div>
+                    </div>
+
+                    {/* Futuristic Glass & Luminous Overlay Filter for Visual 2 */}
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/0 via-white/10 to-white/0 mix-blend-overlay opacity-60 z-20 transition-all duration-700 group-hover/v2:rotate-12 group-hover/v2:scale-150" />
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-500/5 via-transparent to-transparent mix-blend-color-dodge z-10" />
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#232b85]/5 via-transparent to-transparent mix-blend-plus-lighter z-10" />
+                    <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.03)_50%)] bg-[size:100%_4px] opacity-10 z-10" />
                   </div>
                 </div>
 
-                {/* RIGHT COLUMN: ACTION & DATA CONTROLS */}
-                <div className="lg:col-span-7 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
-                  {/* Titles */}
-                  <div className="flex flex-col items-center lg:items-start select-none">
-                    <span className="text-[10px] font-mono tracking-widest text-[#f26d21] uppercase font-black">ROADSHOW D'ÉLITE EN AFRIQUE</span>
-                    <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col lg:flex-row lg:items-baseline gap-x-2.5 gap-y-1 mt-1">
-                      <span>SALON SPORTIX</span>
-                      <span className="text-rose-450 uppercase">
-                        {currentDestination.name}
-                      </span>
-                    </h1>
-                    <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mt-1">
-                      📍 {currentDestination.subtext}
-                    </p>
-                  </div>
-
-                  {/* Countdown Metrics Row */}
-                  <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
-                    <div className="grid grid-cols-4 gap-2.5 w-full select-none">
-                      {/* DAYS */}
-                      <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
-                        <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
-                          {String(timeLeft.days).padStart(2, '0')}
-                        </span>
-                        <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
-                          JOURS
-                        </span>
-                      </div>
-
-                      {/* HOURS */}
-                      <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
-                        <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
-                          {String(timeLeft.hours).padStart(2, '0')}
-                        </span>
-                        <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
-                          HEURES
-                        </span>
-                      </div>
-
-                      {/* MINUTES */}
-                      <div className="relative flex flex-col items-center justify-center border border-white/5 rounded-xl bg-black/40 backdrop-blur-md py-3 min-w-[65px]">
-                        <span className="text-xl sm:text-2xl font-mono font-bold text-white tracking-tight">
-                          {String(timeLeft.minutes).padStart(2, '0')}
-                        </span>
-                        <span className="text-[7.5px] font-mono tracking-widest text-gray-500 mt-1 uppercase">
-                          MINUTES
-                        </span>
-                      </div>
-
-                      {/* SECONDS */}
-                      <div className="relative flex flex-col items-center justify-center border border-[#f26d21]/20 rounded-xl bg-[#1c110f]/45 backdrop-blur-md py-3 min-w-[65px]">
-                        <span className="text-xl sm:text-2xl font-mono font-bold text-[#f26d21] tracking-tight animate-pulse-slow">
-                          {String(timeLeft.seconds).padStart(2, '0')}
-                        </span>
-                        <span className="text-[7.5px] font-mono tracking-widest text-[#f26d21]/60 mt-1 uppercase">
-                          SECONDES
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
+                {/* Below the visuals: other controls */}
+                <div className="w-full max-w-2xl flex flex-col items-center space-y-6 pt-4">
+                  
                   {/* Cumulative Live Counter System */}
-                  <div className="w-full max-w-sm flex flex-col bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 select-none relative overflow-hidden group text-left">
+                  <div className="w-full max-w-md flex flex-col bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 select-none relative overflow-hidden group text-left">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
                     <div className="flex items-center gap-2">
                       <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
@@ -575,32 +751,6 @@ END:VCALENDAR`;
                       })}
                     </div>
                   </div>
-
-                  {/* Direct Information Details & Phone numbers */}
-                  {currentDestination.phones && currentDestination.phones.length > 0 && (
-                    <div className="w-full max-w-md flex items-start gap-3 bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 text-left">
-                      <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
-                      <div>
-                        <h4 className="text-[9px] font-mono uppercase text-emerald-400 tracking-wider">Secrétariat & Liaison WhatsApp</h4>
-                        <p className="text-[10.5px] text-gray-400 mt-0.5">Cliquez pour ouvrir un chat pré-rempli correspondant à votre choix.</p>
-                        <div className="flex flex-col gap-1.5 mt-2">
-                          {currentDestination.phones.map((phone, idx) => (
-                            <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                              <a 
-                                href={getWhatsappLink(phone, selectedRequest)} 
-                                target="_blank"
-                                rel="noreferrer"
-                                className="font-bold text-slate-100 hover:text-emerald-400 transition-colors cursor-pointer"
-                              >
-                                {phone}
-                              </a>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Action Buttons row */}
                   <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
