@@ -32,7 +32,18 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
         body: JSON.stringify({ email: identifier, password }),
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get('content-type');
+      let data: any = {};
+
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const rawText = await res.text();
+        if (rawText.toLowerCase().includes('cannot be found') || rawText.toLowerCase().includes('expired') || res.status === 404) {
+          throw new Error('Le service d\'authentification est en cours de démarrage. Veuillez réessayer d\'ici 5 secondes.');
+        }
+        throw new Error('Réponse du serveur non valide. Veuillez réessayer.');
+      }
 
       if (!res.ok) {
         throw new Error(data.error || 'Identifiants invalides');
@@ -74,7 +85,18 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
         }),
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get('content-type');
+      let data: any = {};
+
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const rawText = await res.text();
+        if (rawText.toLowerCase().includes('cannot be found') || rawText.toLowerCase().includes('expired') || res.status === 404) {
+          throw new Error('Le service d\'authentification est en cours de démarrage. Veuillez réessayer d\'ici 5 secondes.');
+        }
+        throw new Error('Réponse du serveur non valide (Google Auth). Veuillez réessayer.');
+      }
 
       if (!res.ok) {
         throw new Error(data.error || 'Erreur lors de la connexion Google');
