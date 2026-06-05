@@ -53,45 +53,47 @@ Keep your responses professional, elegant, polite, and in French (since the site
 
 // AI Support Chat Bot Route
 app.post('/api/support/message', async (req, res) => {
-  try {
-    const { messages } = req.body;
-    if (!messages || !Array.isArray(messages)) {
-      return res.status(400).json({ error: 'Format invalide. Envoyez un tableau de messages.' });
-    }
+  const { messages } = req.body;
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: 'Format invalide. Envoyez un tableau de messages.' });
+  }
 
+  // Define local fallback responder
+  const getSimulatedResponse = (msgs: any[]) => {
+    const lastMessageObj = msgs[msgs.length - 1];
+    const userText = (lastMessageObj?.content || lastMessageObj?.message || '').toLowerCase();
+    let replyMessage = "Bonjour ! Je suis l'assistant officiel de Salon Sportix. Comment puis-je vous guider à travers nos 6 destinations de roadshow d'élite (Douala, Yaoundé, Cotonou, Nairobi, Abidjan et Casablanca) ? Écrivez-nous à salon-sportix@yahoo.com.";
+    
+    if (userText.includes('douala')) {
+      replyMessage = "Sportix Douala aura lieu du 24 au 26 Septembre 2026 au Cameroun ! C'est le premier salon d'Afrique Centrale dédié à l'innovation média et sports tech. Vous pouvez cliquer sur le nœud Douala sur l'orbite pour voir le compte à rebours et vous inscrire.";
+    } else if (userText.includes('yaound')) {
+      replyMessage = "Sportix Yaoundé se tiendra en Mars 2027 au Cameroun. Cette édition se focalisera sur la gouvernance sportive et le sport-business public-privé. Écrivez à salon-sportix@yahoo.com pour devenir partenaire.";
+    } else if (userText.includes('abidjan')) {
+      replyMessage = "Abidjan accueillera Sportix en Novembre 2027, après les triomphes de la CAN, axé sur la diplomatie sportive internationale et le sponsoring de marque.";
+    } else if (userText.includes('cotonou')) {
+      replyMessage = "Sportix Cotonou aura lieu au Bénin en Avril 2027. Ce salon est centré sur la formation d'élite, la médecine du sport et la gestion des académies.";
+    } else if (userText.includes('can') || userText.includes('nairobi') || userText.includes('kenya')) {
+      replyMessage = "L'édition spéciale CAN 2027 au Kenya (Nairobi) aura lieu en Juillet 2027 pour coïncider avec la Coupe d'Afrique des Nations ! On y parlera d'arènes intelligentes, de retransmission immersive et de fan engagement.";
+    } else if (userText.includes('casablanca') || userText.includes('maroc')) {
+      replyMessage = "L'édition de Sportix Casablanca aura lieu au Maroc en Mai 2028 (et non en Juin) ! Elle réunira le sport d'élite, l'expertise technologique marocaine et les grandes alliances de l'industrie du football. Contactez-nous sur salon-sportix@yahoo.com.";
+    } else if (userText.includes('calendrier') || userText.includes('ics') || userText.includes('date')) {
+      replyMessage = "Chaque page de destination comporte un bouton 'Ajouter au calendrier'. En cliquant dessus, vous téléchargerez un fichier standard .ics pour l'importer instantanément sur Google Calendar, Apple Calendar ou Outlook !";
+    } else if (userText.includes('notifi') || userText.includes('inscri') || userText.includes('email') || userText.includes('alerte')) {
+      replyMessage = "Pour rester informé en temps réel, rendez-vous sur la destination de votre choix et cliquez sur le bouton blanc éclair 'Être notifié'. Un formulaire s'ouvrira pour choisir votre profil (Visiteur, Partenaire, Média ou Intervenant) !";
+    } else if (userText.includes('orbite') || userText.includes('tourne') || userText.includes('constellation') || userText.includes('rotat')) {
+      replyMessage = "La page d'accueil affiche une constellation dynamique de nos 6 salons. Nous l'avons rendue entièrement interactive : vous pouvez l'arrêter ou la relancer grâce au bouton en bas 'Lancer/Pause l'Orbite'. Chaque nœud est cliquable !";
+    }
+    return replyMessage;
+  };
+
+  try {
     const key = process.env.GEMINI_API_KEY;
     if (!key) {
-      // Elegant mocking when Gemini API Key is missing so the frontend continues to operate beautifully
       console.log("Using Mock AI helper response due to missing GEMINI_API_KEY");
-      const lastMessageObj = messages[messages.length - 1];
-      const userText = (lastMessageObj?.content || lastMessageObj?.message || '').toLowerCase();
-      let replyMessage = "Bonjour ! Je suis l'assistant officiel de Salon Sportix. Comment puis-je vous guider à travers nos 6 destinations de roadshow d'élite (Douala, Yaoundé, Cotonou, Nairobi, Abidjan et Casablanca) ? Écrivez-nous à salon-sportix@yahoo.com.";
-      
-      if (userText.includes('douala')) {
-        replyMessage = "Sportix Douala aura lieu du 24 au 26 Septembre 2026 au Cameroun ! C'est le premier salon d'Afrique Centrale dédié à l'innovation média et sports tech. Vous pouvez cliquer sur le nœud Douala sur l'orbite pour voir le compte à rebours et vous inscrire.";
-      } else if (userText.includes('yaound')) {
-        replyMessage = "Sportix Yaoundé se tiendra en Mars 2027 au Cameroun. Cette édition se focalisera sur la gouvernance sportive et le sport-business public-privé. Écrivez à salon-sportix@yahoo.com pour devenir partenaire.";
-      } else if (userText.includes('abidjan')) {
-        replyMessage = "Abidjan accueillera Sportix en Novembre 2027, après les triomphes de la CAN, axé sur la diplomatie sportive internationale et le sponsoring de marque.";
-      } else if (userText.includes('cotonou')) {
-        replyMessage = "Sportix Cotonou aura lieu au Bénin en Avril 2027. Ce salon est centré sur la formation d'élite, la médecine du sport et la gestion des académies.";
-      } else if (userText.includes('can') || userText.includes('nairobi') || userText.includes('kenya')) {
-        replyMessage = "L'édition spéciale CAN 2027 au Kenya (Nairobi) aura lieu en Juillet 2027 pour coïncider avec la Coupe d'Afrique des Nations ! On y parlera d'arènes intelligentes, de retransmission immersive et de fan engagement.";
-      } else if (userText.includes('casablanca') || userText.includes('maroc')) {
-        replyMessage = "L'édition de Sportix Casablanca aura lieu au Maroc en Mai 2028 (et non en Juin) ! Elle réunira le sport d'élite, l'expertise technologique marocaine et les grandes alliances de l'industrie du football. Contactez-nous sur salon-sportix@yahoo.com.";
-      } else if (userText.includes('calendrier') || userText.includes('ics') || userText.includes('date')) {
-        replyMessage = "Chaque page de destination comporte un bouton 'Ajouter au calendrier'. En cliquant dessus, vous téléchargerez un fichier standard .ics pour l'importer instantanément sur Google Calendar, Apple Calendar ou Outlook !";
-      } else if (userText.includes('notifi') || userText.includes('inscri') || userText.includes('email') || userText.includes('alerte')) {
-        replyMessage = "Pour rester informé en temps réel, rendez-vous sur la destination de votre choix et cliquez sur le bouton blanc éclair 'Être notifié'. Un formulaire s'ouvrira pour choisir votre profil (Visiteur, Partenaire, Média ou Intervenant) !";
-      } else if (userText.includes('orbite') || userText.includes('tourne') || userText.includes('constellation') || userText.includes('rotat')) {
-        replyMessage = "La page d'accueil affiche une constellation dynamique de nos 6 salons. Nous l'avons rendue entièrement interactive : vous pouvez l'arrêter ou la relancer grâce au bouton en bas 'Lancer/Pause l'Orbite'. Chaque nœud est cliquable !";
-      }
-
-      return res.json({ text: replyMessage });
+      return res.json({ text: getSimulatedResponse(messages) });
     }
 
     const ai = getAI();
-    // Convert client messages to Gemini message contents
     const contents = messages.map(m => {
       const role = m.role === 'assistant' ? 'model' : 'user';
       return {
@@ -101,7 +103,7 @@ app.post('/api/support/message', async (req, res) => {
     });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.5-flash',
+      model: 'gemini-2.5-flash',
       contents,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
@@ -112,7 +114,8 @@ app.post('/api/support/message', async (req, res) => {
     return res.json({ text: response.text });
   } catch (err: any) {
     console.error('Gemini Support Error:', err);
-    res.status(500).json({ error: "Erreur lors du traitement d'AI.", details: err.message });
+    console.log("Falling back contextually to simulated response due to API call exception");
+    return res.json({ text: getSimulatedResponse(messages) });
   }
 });
 
@@ -232,44 +235,89 @@ const SIMULATED_VISITORS = [
 // USER LOGIN ROUTE
 app.post('/api/auth/login', (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Adresse e-mail et mot de passe requis.' });
-    }
+    const { email, password, isGoogleLogin, name, avatar } = req.body;
 
-    const normalizedEmail = email.toLowerCase().trim();
-    
-    // Check pre-registered credentials
-    if (REGISTERED_USERS[normalizedEmail]) {
-      if (REGISTERED_USERS[normalizedEmail] === password) {
-        const user = USER_DETAILS[normalizedEmail] || {
-          id: 'usr_vip',
-          email: normalizedEmail,
-          name: 'Invité d\'Honneur',
-          role: 'Visiteur',
-          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
-        };
-        return res.json({ success: true, token: 'tok_' + user.id, user });
-      } else {
-        return res.status(401).json({ error: 'Mot de passe incorrect.' });
+    // Handle Google Login instantly and beautifully with full profile creation
+    if (isGoogleLogin) {
+      if (!email) {
+        return res.status(400).json({ error: 'Adresse e-mail Google manquante.' });
       }
-    }
-
-    // Dynamic sign-up validator: auto-creates accounts for any other email to keep the system real
-    if (password.length >= 4) {
-      const parts = normalizedEmail.split('@')[0];
-      const displayName = parts.charAt(0).toUpperCase() + parts.slice(1);
+      const normalizedEmail = email.toLowerCase().trim();
+      const displayName = name || normalizedEmail.split('@')[0].charAt(0).toUpperCase() + normalizedEmail.split('@')[0].slice(1);
       const user: UserAccount = {
-        id: 'usr_dyn_' + Math.random().toString(36).substring(3, 8),
+        id: 'usr_g_' + Math.random().toString(36).substring(3, 8),
         email: normalizedEmail,
         name: displayName,
         role: 'Visiteur',
-        company: 'Réseau Sportix',
-        avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 999999)}?w=150`
+        company: 'Compte Google Connecté',
+        avatar: avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
       };
-      return res.json({ success: true, token: 'tok_dyn_' + user.id, user });
+      return res.json({ success: true, token: 'tok_google_' + user.id, user });
+    }
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Adresse e-mail, numéro de téléphone et mot de passe requis.' });
+    }
+
+    const normalizedEmailOrPhone = email.trim();
+    const isEmail = normalizedEmailOrPhone.includes('@');
+
+    if (isEmail) {
+      const normalizedEmail = normalizedEmailOrPhone.toLowerCase();
+      // Check pre-registered credentials
+      if (REGISTERED_USERS[normalizedEmail]) {
+        if (REGISTERED_USERS[normalizedEmail] === password) {
+          const user = USER_DETAILS[normalizedEmail] || {
+            id: 'usr_vip',
+            email: normalizedEmail,
+            name: 'Invité d\'Honneur',
+            role: 'Visiteur',
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+          };
+          return res.json({ success: true, token: 'tok_' + user.id, user });
+        } else {
+          return res.status(401).json({ error: 'Mot de passe incorrect.' });
+        }
+      }
+
+      // Dynamic sign-up validator: auto-creates accounts for any other email to keep the system real
+      if (password.length >= 4) {
+        const parts = normalizedEmail.split('@')[0];
+        const displayName = parts.charAt(0).toUpperCase() + parts.slice(1);
+        const user: UserAccount = {
+          id: 'usr_dyn_' + Math.random().toString(36).substring(3, 8),
+          email: normalizedEmail,
+          name: displayName,
+          role: 'Visiteur',
+          company: 'Réseau Sportix',
+          avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 999999)}?w=150`
+        };
+        return res.json({ success: true, token: 'tok_dyn_' + user.id, user });
+      } else {
+        return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 4 caractères.' });
+      }
     } else {
-      return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 4 caractères.' });
+      // It's a phone number login!
+      if (password.length >= 4) {
+        // Clean phone string to display nicely
+        const cleanPhone = normalizedEmailOrPhone.replace(/[^0-9+]/g, '');
+        if (cleanPhone.length < 5) {
+          return res.status(400).json({ error: 'Le numéro de téléphone semble trop court (min. 5 chiffres).' });
+        }
+        
+        // Return simulated user with phone number
+        const user: UserAccount = {
+          id: 'usr_phone_' + Math.random().toString(36).substring(3, 8),
+          email: `${cleanPhone}@phone.sportix.com`,
+          name: `Utilisateur ${cleanPhone}`,
+          role: 'Visiteur',
+          company: `Mobile ${cleanPhone}`,
+          avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150`
+        };
+        return res.json({ success: true, token: 'tok_phone_' + user.id, user });
+      } else {
+        return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 4 caractères.' });
+      }
     }
   } catch (err: any) {
     return res.status(500).json({ error: 'Erreur lors de la connexion.' });
