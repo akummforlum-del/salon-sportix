@@ -56,3 +56,17 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column !important;
+  }
+
+  .logo {
+    width: 150px !important;
+  }
+
+  .date-box {
+    width: 100% !important;
+  }
+}
+
