@@ -5,7 +5,6 @@ import SportixLogo from './SportixLogo';
 import { Destination, User } from '../types';
 import { DESTINATIONS } from '../data';
 import bgImg from '../assets/images/diverse_stadium_suite_1780564197298.png';
-import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 
 interface DestinationOrbitProps {
@@ -262,9 +261,9 @@ export default function DestinationOrbit({
       </main>
 
       {/* Support, Contact & Collaborators Deck (No labels) */}
-      <section className="w-full max-w-4xl mx-auto mb-6 bg-black/45 border border-white/5 p-5 rounded-2xl backdrop-blur-md flex flex-col lg:flex-row items-stretch gap-6 text-xs z-15">
-        {/* Left Side: Support Phone Numbers */}
-        <div className="flex-1 flex flex-col justify-between gap-4">
+      <section className="w-full max-w-4xl mx-auto mb-6 bg-black/45 border border-white/5 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-center gap-6 text-xs z-15">
+        {/* Support Phone Numbers & Emails */}
+        <div className="w-full flex flex-col gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
               <Phone className="w-4 h-4 text-amber-500" />
@@ -294,30 +293,6 @@ export default function DestinationOrbit({
               <a href="mailto:mountain_consulting@yahoo.fr" className="font-mono text-[10px] text-white hover:text-rose-450 transition-colors font-semibold">
                 mountain_consulting@yahoo.fr
               </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Dynamic Vertical Separator */}
-        <div className="hidden lg:block w-px bg-white/10" />
-        <div className="block lg:hidden h-px bg-white/10 w-full" />
-
-        {/* Right Side: Collaborators Logos only */}
-        <div className="flex flex-col justify-center gap-3 shrink-0">
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5">
-            {/* Inside Sports */}
-            <div className="hover:scale-105 transition-transform duration-300">
-              <InsideSportsLogo className="h-7" />
-            </div>
-
-            {/* Felin */}
-            <div className="hover:scale-105 transition-transform duration-300 w-[65px] flex items-center justify-center">
-              <FelinLogo className="h-5" />
-            </div>
-
-            {/* Sport-theque */}
-            <div className="hover:scale-105 transition-transform duration-300">
-              <SportThequeLogo className="h-7" />
             </div>
           </div>
         </div>

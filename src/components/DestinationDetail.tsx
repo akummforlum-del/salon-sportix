@@ -9,7 +9,6 @@ import SportixLogo from './SportixLogo';
 import NotifyModal from './NotifyModal';
 import bgImg from '../assets/images/diverse_stadium_suite_1780564197298.png';
 import exactPeopleImg from '../assets/images/sportix_exact_people_1780550707928.png';
-import { InsideSportsLogo, FelinLogo, SportThequeLogo } from './CollaboratorsLogos';
 
 
 interface DestinationDetailProps {
