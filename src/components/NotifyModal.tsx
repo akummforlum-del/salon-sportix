@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Bell, CheckCircle2, Loader2, Mail, Phone } from 'lucide-react';
 import { Destination } from '../types';
@@ -7,14 +7,21 @@ interface NotifyModalProps {
   isOpen: boolean;
   onClose: () => void;
   destination: Destination;
+  initialInterest?: 'visitor' | 'speaker' | 'sponsor' | 'media' | 'expo';
 }
 
-export default function NotifyModal({ isOpen, onClose, destination }: NotifyModalProps) {
+export default function NotifyModal({ isOpen, onClose, destination, initialInterest }: NotifyModalProps) {
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [interest, setInterest] = useState<'visitor' | 'speaker' | 'sponsor' | 'media' | 'expo'>('visitor');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [generatedUrl, setGeneratedUrl] = useState('');
+
+  useEffect(() => {
+    if (isOpen && initialInterest) {
+      setInterest(initialInterest);
+    }
+  }, [isOpen, initialInterest]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,10 +49,8 @@ export default function NotifyModal({ isOpen, onClose, destination }: NotifyModa
                  `* 🎯 Participation : ${interestLabel}\n\n` +
                  `Veuillez m'inscrire pour recevoir en priorité les alertes officielles, stands et billetterie. Merci !`;
 
-    const cleanPhones = destination.phones || [];
-    const destinationPhone = cleanPhones[0] || '237694885086';
-    const rawNumber = destinationPhone.replace(/[^\d]/g, '');
-    const whatsappUrl = `https://wa.me/${rawNumber}?text=${encodeURIComponent(text)}`;
+    const rawNumber = '237654152499';
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${rawNumber}&text=${encodeURIComponent(text)}`;
     setGeneratedUrl(whatsappUrl);
 
     // Simulate API registration call (Persisting Email & WhatsApp)

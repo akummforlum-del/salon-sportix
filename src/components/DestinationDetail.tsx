@@ -65,7 +65,7 @@ export default function DestinationDetail({
         break;
     }
     
-    return `https://wa.me/${rawNumber}?text=${encodeURIComponent(text)}`;
+    return `https://api.whatsapp.com/send?phone=${rawNumber}&text=${encodeURIComponent(text)}`;
   };
 
   // Cumulative live counter ticking up continuously in real-time
@@ -313,9 +313,10 @@ END:VCALENDAR`;
               <span>{activeCount} en ligne</span>
             </button>
 
-            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-xl px-2.5 py-1.5 h-11 select-none" title="Visiteurs uniques sur ce salon">
-              <Globe className="w-3.5 h-3.5 text-amber-500" />
-              <span>{cumulativeInscriptions.toLocaleString()} consultés</span>
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-2.5 py-1.5 h-11 select-none" title="Inscriptions & Intérêt (Direct)">
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline font-bold uppercase text-[9px] text-emerald-400">Inscriptions & Intérêt (Direct) :</span>
+              <span className="text-white font-bold">{cumulativeInscriptions.toLocaleString()}</span>
             </div>
             
             <button 
@@ -700,25 +701,6 @@ END:VCALENDAR`;
 
                 {/* Below the visuals: other controls */}
                 <div className="w-full max-w-2xl flex flex-col items-center space-y-6 pt-4">
-                  
-                  {/* Cumulative Live Counter System */}
-                  <div className="w-full max-w-md flex flex-col bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 select-none relative overflow-hidden group text-left">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
-                    <div className="flex items-center gap-2">
-                      <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Inscriptions & Intérêt (Direct)</span>
-                    </div>
-                    <div className="flex items-baseline gap-1.5 mt-1">
-                      <span className="text-xl font-mono font-bold text-white tracking-tight">
-                        {cumulativeInscriptions.toLocaleString()}
-                      </span>
-                      <span className="text-xs text-gray-400 font-light font-sans">intéressés cumulés</span>
-                      <span className="flex h-1.5 w-1.5 relative ml-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                      </span>
-                    </div>
-                  </div>
 
                   {/* Segmented control for user request */}
                   <div className="w-full max-w-md bg-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-4 text-left select-none space-y-3.5">
@@ -738,7 +720,10 @@ END:VCALENDAR`;
                         return (
                           <button
                             key={type}
-                            onClick={() => setSelectedRequest(type)}
+                            onClick={() => {
+                              setSelectedRequest(type);
+                              setIsNotifyOpen(true);
+                            }}
                             type="button"
                             className={`py-2 px-3 rounded-xl text-[10.5px] font-semibold text-left transition-all flex items-center justify-between border cursor-pointer ${
                               isActive 
@@ -755,31 +740,21 @@ END:VCALENDAR`;
                   </div>
 
                   {/* Action Buttons row */}
-                  <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
-                    <motion.button
-                      onClick={() => setIsNotifyOpen(true)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full sm:w-auto relative flex items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold py-3 px-5 text-xs hover:bg-orange-50 transition-all cursor-pointer shadow-xl shadow-orange-950/5 flex-1 font-sans"
-                    >
-                      <Bell className="w-4 h-4 text-black animate-swing" />
-                      <span>S'abonner aux alertes (SMS & Email)</span>
-                    </motion.button>
-
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md pt-2">
                     <motion.button
                       onClick={handleAddToCalendar}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#14151b]/90 border border-white/10 text-white font-semibold hover:border-white/20 py-3 px-5 text-xs transition-all cursor-pointer flex-1 font-sans"
+                      className="w-full relative flex items-center justify-center gap-2 rounded-xl bg-white text-black hover:bg-orange-50 font-semibold py-3 px-5 text-xs transition-all cursor-pointer shadow-xl shadow-orange-950/5 text-center font-sans"
                     >
                       {copiedLink ? (
                         <>
-                          <CheckCircle className="w-4 h-4 text-emerald-450 animate-bounce" />
+                          <CheckCircle className="w-4 h-4 text-emerald-600 animate-bounce" />
                           <span>Ajouté !</span>
                         </>
                       ) : (
                         <>
-                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <Calendar className="w-4 h-4 text-gray-600" />
                           <span>Ajouter au calendrier</span>
                         </>
                       )}
@@ -852,25 +827,7 @@ END:VCALENDAR`;
                 </div>
 
                 {/* Cumulative Live Counter System */}
-                <div className="w-full max-w-sm flex flex-col bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 select-none relative overflow-hidden group text-left">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500" />
-                  <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-emerald-400 animate-spin-slow" />
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Inscriptions & Intérêt (Direct)</span>
-                  </div>
-                  <div className="flex items-baseline gap-1.5 mt-1">
-                    <span className="text-xl font-mono font-bold text-white tracking-tight">
-                      {cumulativeInscriptions.toLocaleString()}
-                    </span>
-                    <span className="text-xs text-gray-400 font-light font-sans">intéressés cumulés</span>
-                    <span className="flex h-1.5 w-1.5 relative ml-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Segmented control for user request */}
+                 {/* Segmented control for user request */}
                 <div className="w-full max-w-md bg-black/40 backdrop-blur-md border border-white/5 rounded-2xl p-4 text-left select-none space-y-3.5">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-3.5 h-3.5 text-[#f26d21] animate-pulse" />
@@ -888,7 +845,10 @@ END:VCALENDAR`;
                       return (
                         <button
                           key={type}
-                          onClick={() => setSelectedRequest(type)}
+                          onClick={() => {
+                            setSelectedRequest(type);
+                            setIsNotifyOpen(true);
+                          }}
                           type="button"
                           className={`py-2 px-3 rounded-xl text-[10.5px] font-semibold text-left transition-all flex items-center justify-between border cursor-pointer ${
                             isActive 
@@ -909,9 +869,7 @@ END:VCALENDAR`;
                   <div className="w-full max-w-md flex items-start gap-3 bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 text-left">
                     <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
                     <div>
-                      <h4 className="text-[9px] font-mono uppercase text-emerald-400 tracking-wider">Secrétariat & Liaison WhatsApp</h4>
-                      <p className="text-[10.5px] text-gray-400 mt-0.5">Cliquez pour ouvrir un chat pré-rempli correspondant à votre choix.</p>
-                      <div className="flex flex-col gap-1.5 mt-2">
+                      <div className="flex flex-col gap-1.5">
                         {currentDestination.phones.map((phone, idx) => (
                           <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
@@ -933,29 +891,19 @@ END:VCALENDAR`;
                 {/* Action Buttons row */}
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md pt-2">
                   <motion.button
-                    onClick={() => setIsNotifyOpen(true)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full sm:w-auto relative flex items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold py-3 px-5 text-xs hover:bg-orange-50 transition-all cursor-pointer shadow-xl shadow-orange-950/5 flex-1 font-sans"
-                  >
-                    <Bell className="w-4 h-4 text-black animate-swing" />
-                    <span>S'abonner aux alertes (SMS & Email)</span>
-                  </motion.button>
-
-                  <motion.button
                     onClick={handleAddToCalendar}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#14151b]/90 border border-white/10 text-white font-semibold hover:border-white/20 py-3 px-5 text-xs transition-all cursor-pointer flex-1 font-sans"
+                    className="w-full relative flex items-center justify-center gap-2 rounded-xl bg-white text-black hover:bg-orange-50 font-semibold py-3 px-5 text-xs transition-all cursor-pointer shadow-xl shadow-orange-950/5 text-center flex-1 font-sans"
                   >
                     {copiedLink ? (
                       <>
-                        <CheckCircle className="w-4 h-4 text-emerald-450 animate-bounce" />
+                        <CheckCircle className="w-4 h-4 text-emerald-600 animate-bounce" />
                         <span>Ajouté !</span>
                       </>
                     ) : (
                       <>
-                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <Calendar className="w-4 h-4 text-gray-650" />
                         <span>Ajouter au calendrier</span>
                       </>
                     )}
