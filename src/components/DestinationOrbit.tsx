@@ -88,28 +88,6 @@ export default function DestinationOrbit({
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full md:w-auto">
-          {/* Live Visitors Counter System */}
-          <button
-            onClick={onOpenRadar}
-            className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/15 rounded-full px-2.5 py-1.5 select-none hover:scale-102 transition-all cursor-pointer shadow-md"
-            title="Ouvrir la Console d'Audience Live"
-          >
-            <Globe className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-            </span>
-            <span>{activeCount} en ligne</span>
-          </button>
-
-          <button
-            onClick={onOpenRadar}
-            className="hidden xs:flex items-center gap-1 text-[10px] sm:text-xs font-mono text-slate-400 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white rounded-full px-2.5 py-1.5 transition-all select-none cursor-pointer"
-            title="Ouvrir la Console d'Audience Live"
-          >
-            <span>{totalVisits} visites</span>
-          </button>
-
           {/* AI Helper tool */}
           {onOpenAiHelp && (
             <button
@@ -299,7 +277,7 @@ export default function DestinationOrbit({
 
                     {/* Destination Date */}
                     <span className="text-[7.5px] sm:text-[8.5px] font-mono font-bold text-center tracking-tight mt-0.5 uppercase line-clamp-1 text-white">
-                      {dest.dateText.split(' ')[0]} {dest.dateText.split(' ')[1] || ''}
+                      {isDouala ? '24 SEPT' : `${dest.dateText.split(' ')[0]} ${dest.dateText.split(' ')[1] || ''}`}
                     </span>
                   </div>
 
@@ -315,44 +293,43 @@ export default function DestinationOrbit({
 
       </main>
 
-      {/* Support, Contact & Collaborators Deck (No labels) */}
-      <section className="w-full max-w-4xl mx-auto mb-6 bg-black/45 border border-white/5 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-center gap-6 text-xs z-15">
-        {/* Support Phone Numbers & Emails */}
-        <div className="w-full flex flex-col gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-              <Phone className="w-4 h-4 text-amber-500" />
-            </div>
-            <span className="text-gray-300 font-bold uppercase tracking-wider font-display">Assistance & Support Direct</span>
+      {/* Contact & Support Deck with numbers restored and no title label */}
+      <div className="w-full max-w-4xl mx-auto mb-6 bg-black/45 border border-white/5 p-4 rounded-xl backdrop-blur-md flex flex-col justify-center gap-3 text-xs z-15 text-center">
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 w-full">
+          {/* Orange Cameroun phone */}
+          <div className="flex items-center justify-center gap-2 bg-orange-500/10 border border-orange-500/20 p-2.5 rounded-xl hover:bg-orange-500/15 transition-all" title="Support Orange Cameroun">
+            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse shrink-0" />
+            <a href="tel:+237694885086" className="font-mono font-bold text-white hover:text-orange-400 transition-colors text-xs">
+              +237 694 88 50 86
+            </a>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 w-full">
-            {/* Orange Cameroun */}
-            <div className="flex items-center gap-2.5 bg-orange-500/10 border border-orange-500/20 p-3 rounded-xl hover:bg-orange-500/15 transition-all animate-fade-in" title="Support Orange Cameroun">
-              <div className="w-2.5 h-2.5 rounded-full bg-orange-500 animate-pulse shrink-0" />
-              <a href="tel:+237694885086" className="font-mono font-bold text-white hover:text-orange-400 transition-colors text-xs">
-                +237 694 88 50 86
-              </a>
-            </div>
 
-            {/* MTN Support */}
-            <div className="flex items-center gap-2.5 bg-amber-400/10 border border-amber-400/20 p-3 rounded-xl hover:bg-amber-400/15 transition-all animate-fade-in" title="Support MTN Cameroun">
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0" />
-              <a href="tel:+237654152499" className="font-mono font-bold text-white hover:text-amber-400 transition-colors text-xs">
-                +237 654 15 24 99
-              </a>
-            </div>
+          {/* MTN Support phone */}
+          <div className="flex items-center justify-center gap-2 bg-amber-400/10 border border-amber-400/20 p-2.5 rounded-xl hover:bg-amber-400/15 transition-all" title="Support MTN Cameroun">
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shrink-0" />
+            <a href="tel:+237654152499" className="font-mono font-bold text-white hover:text-amber-400 transition-colors text-xs">
+              +237 654 15 24 99
+            </a>
+          </div>
 
-            {/* General Consulting Email */}
-            <div className="flex items-center gap-2.5 bg-rose-500/10 border border-rose-500/20 p-3 rounded-xl hover:bg-rose-500/15 transition-all animate-fade-in" title="Email">
-              <Mail className="w-4 h-4 text-rose-450 shrink-0" />
-              <a href="mailto:mountain_consulting@yahoo.fr" className="font-mono text-[10.5px] text-white hover:text-rose-450 transition-colors font-semibold truncate">
-                mountain_consulting@yahoo.fr
-              </a>
-            </div>
+          {/* General Consulting Email */}
+          <div className="flex items-center justify-center gap-2 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl hover:bg-rose-500/15 transition-all" title="Email Mountain Consulting">
+            <span className="text-rose-450 text-xs">📧</span>
+            <a href="mailto:mountain_consulting@yahoo.fr" className="font-mono font-medium text-white hover:text-rose-450 transition-colors text-[11px] truncate">
+              mountain_consulting@yahoo.fr
+            </a>
+          </div>
+
+          {/* Brand Contact Email */}
+          <div className="flex items-center justify-center gap-2 bg-blue-500/10 border border-blue-500/20 p-2.5 rounded-xl hover:bg-blue-500/15 transition-all" title="Email Salon Sportix">
+            <span className="text-blue-400 text-xs">📧</span>
+            <a href="mailto:contact@salon-sportix.com" className="font-mono font-bold text-white hover:text-blue-400 transition-colors text-[11px] truncate">
+              contact@salon-sportix.com
+            </a>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Orbit Controls & Footer Instructions */}
       <footer className="w-full flex flex-col items-center gap-4 z-10">

@@ -298,34 +298,6 @@ END:VCALENDAR`;
           </motion.button>
 
           <div className="flex items-center gap-3">
-            {/* Live Visitors Stats */}
-            <button
-              onClick={onOpenRadar}
-              className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/25 px-2.5 py-1.5 h-11 rounded-xl cursor-pointer transition-all select-none"
-              title="Ouvrir la Console d'Audience Live"
-            >
-              <Globe className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-              </span>
-              <span>{activeCount} en ligne</span>
-            </button>
-
-            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-450 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-2.5 py-1.5 h-11 select-none" title="Inscriptions & Intérêt (Direct)">
-              <Globe className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="hidden sm:inline font-bold uppercase text-[9px] text-emerald-400">Inscriptions & Intérêt (Direct) :</span>
-              <span className="text-white font-bold">{cumulativeInscriptions.toLocaleString()}</span>
-            </div>
-            
-            <button 
-              onClick={onOpenRadar}
-              className="hidden select-none md:flex items-center text-[10px] sm:text-xs font-mono text-slate-400 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 h-11 cursor-pointer hover:bg-white/10 transition-all"
-              title="Ouvrir la Console d'Audience Live"
-            >
-              <span>{totalVisits} visites</span>
-            </button>
-
             {onOpenAiHelp && (
               <motion.button
                 onClick={onOpenAiHelp}
@@ -398,7 +370,7 @@ END:VCALENDAR`;
                 <div className="flex flex-col items-center text-center select-none">
                   <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col sm:flex-row items-center justify-center gap-x-2.5 gap-y-1 mt-1">
                     <span>SALON SPORTIX</span>
-                    <span className="text-rose-450 uppercase">
+                    <span className="text-white uppercase font-black">
                       {currentDestination.name}
                     </span>
                   </h1>
@@ -465,14 +437,14 @@ END:VCALENDAR`;
                     
                     <div className="px-4 flex-1 flex flex-col items-center justify-center space-y-3.5 mt-5">
                       <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none font-display">
-                        SALON
+                        SALON SPORTIX
                       </h2>
                       
                       <p className="text-[10px] sm:text-xs font-black text-slate-200 tracking-normal uppercase max-w-[280px] leading-relaxed font-sans px-1 text-center font-display">
                         {currentDestination.fullTitle}
                       </p>
                       
-                      <div className="text-sm sm:text-base font-bold tracking-[0.2em] font-sans text-amber-500 uppercase">
+                      <div className="text-sm sm:text-base font-bold tracking-[0.2em] font-sans text-white uppercase">
                         {currentDestination.name}
                       </div>
                       
@@ -517,6 +489,14 @@ END:VCALENDAR`;
                             {phone}
                           </a>
                         ))}
+                        {/* Beside/below the phones of different places, add this email */}
+                        <a 
+                          href="mailto:contact@salon-sportix.com"
+                          className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/25 text-blue-450 font-bold font-mono text-[10.5px] rounded-xl transition-all cursor-pointer shadow-md shadow-black/10 mt-1"
+                        >
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
+                          contact@salon-sportix.com
+                        </a>
                       </div>
                     </div>
                     
@@ -768,7 +748,7 @@ END:VCALENDAR`;
                 <div className="flex flex-col items-center lg:items-start select-none">
                   <h1 className="text-3.5xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-white flex flex-col lg:flex-row lg:items-baseline gap-x-2.5 gap-y-1 mt-1">
                     <span>SALON SPORTIX</span>
-                    <span className="text-rose-450 uppercase">
+                    <span className="text-white uppercase font-black">
                       {currentDestination.name}
                     </span>
                   </h1>
@@ -865,24 +845,36 @@ END:VCALENDAR`;
 
                 {/* Direct Information Details & Phone numbers */}
                 {currentDestination.phones && currentDestination.phones.length > 0 && (
-                  <div className="w-full max-w-md flex items-start gap-3 bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 text-left">
-                    <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
-                    <div>
-                      <div className="flex flex-col gap-1.5">
-                        {currentDestination.phones.map((phone, idx) => (
-                          <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                            <a 
-                              href={getWhatsappLink(phone, selectedRequest)} 
-                              target="_blank"
-                              rel="noreferrer"
-                              className="font-bold text-slate-100 hover:text-emerald-400 transition-colors cursor-pointer"
-                            >
-                              {phone}
-                            </a>
-                          </div>
-                        ))}
+                  <div className="w-full max-w-md flex flex-col gap-2.5 bg-emerald-500/10 border border-emerald-500/15 rounded-xl p-3.5 text-left">
+                    <div className="flex items-start gap-3">
+                      <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
+                      <div>
+                        <div className="flex flex-col gap-1.5">
+                          {currentDestination.phones.map((phone, idx) => (
+                            <div key={idx} className="flex items-center gap-1.5 font-mono text-xs">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                              <a 
+                                href={getWhatsappLink(phone, selectedRequest)} 
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-bold text-slate-100 hover:text-emerald-400 transition-colors cursor-pointer"
+                              >
+                                {phone}
+                              </a>
+                            </div>
+                          ))}
+                        </div>
                       </div>
+                    </div>
+                    {/* Beside/below the phone numbers, display the email contact@salon-sportix.com */}
+                    <div className="flex items-center gap-1.5 pt-2 border-t border-white/5 font-mono text-xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
+                      <a 
+                        href="mailto:contact@salon-sportix.com"
+                        className="font-bold text-slate-100 hover:text-blue-400 transition-colors cursor-pointer"
+                      >
+                        contact@salon-sportix.com
+                      </a>
                     </div>
                   </div>
                 )}
@@ -997,6 +989,7 @@ END:VCALENDAR`;
                 <div className="rounded-xl bg-[#13141b] border border-white/5 p-4 text-xs space-y-2">
                   <span className="font-mono text-[9px] text-[#d4af37] uppercase tracking-wider block">CONTACT GENERAL</span>
                   <p className="text-gray-300">📧 mountain_consulting@yahoo.fr</p>
+                  <p className="text-gray-300 font-bold">📧 contact@salon-sportix.com</p>
                   <p className="text-gray-300">📞 +237 600 000 000</p>
                 </div>
 

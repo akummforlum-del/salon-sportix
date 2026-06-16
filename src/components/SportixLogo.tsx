@@ -13,13 +13,13 @@ export default function SportixLogo({ className = '', showSubtitle = true, place
   
   return (
     <div className={`flex flex-col items-center justify-center select-none text-center ${className}`}>
-      {/* Dynamic transparent high-contrast presentation: Clean vector wordmark matching the brand logo-sportix perfectly */}
-      <div className="flex items-center justify-center transition-all hover:scale-102 duration-300">
+      {/* Dynamic high-contrast presentation: White background container (fond blanc) to make the brand logo-sportix perfectly visible anywhere */}
+      <div className="bg-white px-4 py-2 rounded-full shadow-lg border border-slate-200/40 flex items-center justify-center transition-all hover:scale-102 duration-300">
         <svg
           viewBox="0 0 150 58"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="h-10 sm:h-12 w-auto"
+          className="h-8 sm:h-10 w-auto"
         >
           {/* Slanted brush-stroke 'S' outline: sharp, dynamic, and lightning-bolt-like matching the brand logo-sportix perfectly */}
           <path
@@ -75,7 +75,7 @@ export default function SportixLogo({ className = '', showSubtitle = true, place
 
       {/* 3. Name of the place displayed directly down of it */}
       {placeName && (
-        <span className="text-[10px] sm:text-[12px] font-mono tracking-[0.45em] text-[#f26d21] mt-2 uppercase font-black pl-[0.45em] drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.9)] animate-pulse">
+        <span className="text-[10px] sm:text-[12px] font-mono tracking-[0.45em] text-white mt-2 uppercase font-black pl-[0.45em] drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.9)] animate-pulse">
           {placeName}
         </span>
       )}

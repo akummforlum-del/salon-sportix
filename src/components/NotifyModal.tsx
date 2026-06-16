@@ -117,7 +117,7 @@ export default function NotifyModal({ isOpen, onClose, destination, initialInter
                 </div>
 
                 <p className="text-xs text-gray-400 mb-5 leading-relaxed">
-                  Soyez averti en priorité par <strong className="text-white">E-mail et WhatsApp</strong> du lancement de la billetterie, des stands officiels et des conférenciers du salon <strong className="text-white">Sportix {destination.name}</strong>.
+                  Soyez averti en priorité par <strong className="text-white">E-mail et WhatsApp</strong> du lancement de la billetterie, des stands officiels et des conférenciers du <strong className="text-white">salon Sportix {destination.name}</strong>.
                 </p>
 
                 {/* Subscription Form */}
