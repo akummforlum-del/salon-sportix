@@ -277,7 +277,7 @@ export default function DestinationOrbit({
 
                     {/* Destination Date */}
                     <span className="text-[7.5px] sm:text-[8.5px] font-mono font-bold text-center tracking-tight mt-0.5 uppercase line-clamp-1 text-white">
-                      {isDouala ? '24 SEPT' : `${dest.dateText.split(' ')[0]} ${dest.dateText.split(' ')[1] || ''}`}
+                      {isDouala ? 'SEPTEMBRE 2026' : `${dest.dateText.split(' ')[0]} ${dest.dateText.split(' ')[1] || ''}`}
                     </span>
                   </div>
 

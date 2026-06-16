@@ -249,7 +249,7 @@ END:VCALENDAR`;
 
                 {/* Tooltip for small sizes */}
                 <div className="md:hidden absolute left-full ml-4 bg-[#12131a] border border-white/10 text-[10px] py-1.5 px-3 rounded-md font-mono tracking-wider uppercase opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-xl whitespace-nowrap">
-                  {dest.name} ({dest.dateText.split(' ')[0]})
+                  {dest.name} ({dest.id === 'douala' ? 'SEPTEMBRE' : dest.dateText.split(' ')[0]})
                 </div>
               </button>
             );
